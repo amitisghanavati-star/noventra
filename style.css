@@ -20,7 +20,13 @@ body { background-color: var(--bg); color: var(--white); }
 .brand-mark { border-color: var(--silver); box-shadow: 0 0 18px rgba(199,203,208,.08); }
 nav a { transition: color .2s ease, border-color .2s ease, background .2s ease; }
 nav a:hover { color: #fff; }
-.button, .nav-cta { border-radius: 7px; }
+.button, .nav-cta { border-radius: 7px; }body {
+  background-image: url('./noventra-bg.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
 .button.ghost:hover { border-color: var(--silver); background: #1b1e23; }
 .feature-card, .resource-card, .contact-panel { border-radius: 10px; }
 .feature-card { transition: transform .25s ease, border-color .25s ease, background .25s ease; }
