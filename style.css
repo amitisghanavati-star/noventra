@@ -860,7 +860,7 @@ body {
       rgba(245, 242, 236, 0.82),
       rgba(245, 242, 236, 0.90)
     ),
-    url('./ventra.png');
+    url('./ventra-bg.png');
   background-size: cover;
   background-position: center top;
   background-repeat: no-repeat;
