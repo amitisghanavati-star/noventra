@@ -964,6 +964,28 @@ body {
 
 .contact-panel {
   background: rgba(11, 12, 14, 0.76);
+}/* NOVENTRA — نمایش پس‌زمینه واقعی */
+body {
+  background: #08090b url("./atelier-background.png")
+    center top / cover fixed no-repeat !important;
+}
+
+.hero,
+.section,
+.about-section,
+.methods-section,
+.contact-section {
+  background-color: transparent !important;
+}
+
+.topbar {
+  background: rgba(8, 9, 11, 0.72) !important;
+}
+
+.feature-card,
+.resource-card,
+.contact-panel {
+  background: rgba(8, 9, 11, 0.58) !important;
 }
 
 
