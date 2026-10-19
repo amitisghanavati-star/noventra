@@ -1072,6 +1072,62 @@ footer > span {
   color: #c2c8d1 !important;
   font-size: 12px !important;
 }
+/* NOVENTRA — نوشته‌های روشن و خوانا */
+body {
+  color: #ffffff !important;
+  font-size: 16px;
+  line-height: 2;
+}
+
+/* متن‌های توضیحی */
+body p,
+body li,
+body label,
+body small,
+.hero-copy > p,
+.section-heading > p,
+.feature-card p,
+.method p,
+.resource-card p,
+.contact-panel p,
+.fashion-slide-copy p {
+  color: #f3f5f8 !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 2.1 !important;
+  opacity: 1 !important;
+}
+
+/* عنوان‌ها */
+h1, h2, h3, h4,
+.hero-copy h1,
+.section-heading h2,
+.fashion-slide-copy h3 {
+  color: #ffffff !important;
+  font-weight: 800 !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+
+/* منو و نوشته‌های کوچک */
+nav a,
+.eyebrow,
+.hero-stats span,
+footer p,
+footer span {
+  color: #edf2f8 !important;
+  opacity: 1 !important;
+}
+
+/* حفظ خوانایی بخش کتابخانه با پس‌زمینه روشن */
+.library,
+.library p,
+.library h2,
+.library h3,
+.library span,
+.library a {
+  color: #252a31 !important;
+}
+
 
 
 
