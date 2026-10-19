@@ -1011,6 +1011,68 @@ body {
   box-shadow: none !important;
   transform: none !important;
 }
+/* NOVENTRA — حذف قاب دور الگوی لباس */
+.hero-art .pattern-sheet {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+  padding: 0 !important;
+}
+
+.pattern-sheet .sheet-top,
+.pattern-sheet .sheet-bottom {
+  display: none !important;
+}
+
+.pattern-sheet svg {
+  display: block;
+  width: 100%;
+  margin: 0 !important;
+}
+
+/* خواناتر شدن نوشته‌ها */
+body {
+  color: #ffffff !important;
+  font-weight: 400;
+}
+
+.hero-copy > p,
+.section-heading > p,
+.feature-card p,
+.method p,
+.about-grid > div p,
+.contact-section > div > p,
+.contact-panel p,
+.library-copy > p {
+  color: #e0e4e9 !important;
+  font-size: 15px !important;
+}
+
+nav,
+.ticker,
+.eyebrow,
+.method > span,
+footer p,
+footer > span {
+  color: #d5dae1 !important;
+}
+
+.feature-card h3,
+.resource-card h3,
+.method h3,
+.about-lead {
+  color: #ffffff !important;
+}
+
+.hero-stats span,
+.resource-meta p,
+.fineprint,
+.contact-panel small {
+  color: #c2c8d1 !important;
+  font-size: 12px !important;
+}
+
 
 
 
