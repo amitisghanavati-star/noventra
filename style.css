@@ -987,6 +987,24 @@ body {
 .contact-panel {
   background: rgba(8, 9, 11, 0.58) !important;
 }
+/* کم‌رنگ کردن لایه‌های قبلی */
+.hero-grid {
+  opacity: 0.04 !important;
+}
+
+.hero::before,
+.hero::after {
+  opacity: 0.08;
+}
+
+/* عکس جدید واضح بماند */
+body {
+  background-image: url("./atelier-background.png") !important;
+  background-size: cover;
+  background-position: center top;
+  background-attachment: fixed;
+}
+
 
 
 
