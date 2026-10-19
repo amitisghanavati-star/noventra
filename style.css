@@ -1004,6 +1004,14 @@ body {
   background-position: center top;
   background-attachment: fixed;
 }
+/* حذف قاب قدیمی دور طرح لباس */
+.pattern-sheet {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
 
 
 
