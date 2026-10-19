@@ -852,4 +852,26 @@ a {
   .archive-cover {
     min-height: 260px;
   }
+}/* NOVENTRA - Luxury Tailoring Background */
+body {
+  background-color: #f5f2ec;
+  background-image:
+    linear-gradient(
+      rgba(245, 242, 236, 0.82),
+      rgba(245, 242, 236, 0.90)
+    ),
+    url('./ventra.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+.hero {
+  background:
+    linear-gradient(
+      rgba(245, 242, 236, 0.42),
+      rgba(245, 242, 236, 0.62)
+    ),
+    url('./ventra.png') center / cover no-repeat !important;
 }
