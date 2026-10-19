@@ -875,3 +875,97 @@ body {
     ),
     url('./ventra.png') center / cover no-repeat !important;
 }
+/* NOVENTRA — پس‌زمینه واضح‌تر */
+body {
+  background-color: #08090b;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(8, 9, 11, 0.08),
+      rgba(8, 9, 11, 0.16)
+    ),
+    url('./atelier-backgrond.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* اجازه بده تصویر از زیر بخش‌ها دیده شود */
+.methods-section {
+  background: rgba(16, 18, 22, 0.58);
+}
+
+.feature-card,
+.feature-card.featured {
+  background: rgba(17, 19, 23, 0.72);
+}
+
+.resource-card {
+  background: rgba(16, 18, 22, 0.70);
+}
+
+.contact-section {
+  background: rgba(18, 20, 24, 0.66);
+}
+
+.contact-panel {
+  background: rgba(11, 12, 14, 0.76);
+}
+
+/* NOVENTRA — پس‌زمینه واضح‌تر */
+body {
+  background-color: #08090b;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(8, 9, 11, 0.08),
+      rgba(8, 9, 11, 0.16)
+    ),
+    url('./atelier-backgrond.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+/* NOVENTRA — پس‌زمینه واضح‌تر */
+body {
+  background-color: #08090b;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(8, 9, 11, 0.08),
+      rgba(8, 9, 11, 0.16)
+    ),
+    url('./atelier-backgrond.png');
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+/* اجازه بده تصویر از زیر بخش‌ها دیده شود */
+.methods-section {
+  background: rgba(16, 18, 22, 0.58);
+}
+
+.feature-card,
+.feature-card.featured {
+  background: rgba(17, 19, 23, 0.72);
+}
+
+.resource-card {
+  background: rgba(16, 18, 22, 0.70);
+}
+
+.contact-section {
+  background: rgba(18, 20, 24, 0.66);
+}
+
+.contact-panel {
+  background: rgba(11, 12, 14, 0.76);
+}
+
+
+
+
