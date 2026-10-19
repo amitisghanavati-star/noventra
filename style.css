@@ -1135,3 +1135,171 @@ footer span {
 
 
 
+
+
+/* NOVENTRA fashion gallery — recovered and placed in the page flow */
+.fashion-slider-section {
+  padding: 76px 8vw 82px;
+  background:
+    radial-gradient(ellipse at 15% 20%, rgba(153, 164, 178, .09), transparent 38%),
+    linear-gradient(180deg, #101216 0%, #0a0b0d 100%);
+  border-block: 1px solid #292e35;
+}
+.fashion-slider-heading {
+  max-width: 1120px;
+  margin: 0 auto 25px;
+}
+.fashion-slider-heading .eyebrow { margin-bottom: 11px; }
+.fashion-slider-heading h2 {
+  margin: 0 0 8px;
+  color: #fff;
+  font-size: clamp(30px, 4vw, 48px);
+  line-height: 1.45;
+  font-weight: 800;
+}
+.fashion-slider-heading h2 em { color: #bbc2cb; font-style: normal; }
+.fashion-slider-heading p {
+  max-width: 620px;
+  margin: 0;
+  color: #e4e8ed;
+  font-size: 15px;
+}
+.fashion-slider {
+  max-width: 1120px;
+  min-height: 520px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border: 1px solid #444b55;
+  background: #131519;
+  box-shadow: 0 24px 65px rgba(0, 0, 0, .38);
+}
+.fashion-slide {
+  position: absolute;
+  inset: 0;
+  min-height: 520px;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .65s ease, visibility .65s ease;
+}
+.fashion-slide.is-active { visibility: visible; opacity: 1; z-index: 1; }
+.fashion-slide img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 36%;
+  filter: saturate(.82);
+}
+.fashion-slide-shade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(5, 6, 8, .05) 0%, rgba(5, 6, 8, .30) 35%, rgba(5, 6, 8, .88) 100%);
+}
+.fashion-slide-copy {
+  position: absolute;
+  z-index: 2;
+  right: clamp(24px, 6vw, 78px);
+  bottom: 78px;
+  width: min(470px, 72%);
+  color: #fff;
+}
+.fashion-slide-copy > span {
+  color: #f1f3f6;
+  font: 11px/1.5 Arial, sans-serif;
+  letter-spacing: 2px;
+}
+.fashion-slide-copy h3 {
+  margin: 14px 0 10px;
+  color: #fff;
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1.45;
+  font-weight: 800;
+}
+.fashion-slide-copy p {
+  margin: 0;
+  color: #f5f6f8 !important;
+  font-size: 15px !important;
+  font-weight: 500;
+  line-height: 2 !important;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, .6);
+}
+.fashion-slide-copy a {
+  display: inline-flex;
+  margin-top: 17px;
+  padding: 9px 16px;
+  border: 1px solid rgba(255, 255, 255, .78);
+  color: #fff;
+  background: rgba(8, 9, 11, .25);
+  font-size: 13px;
+  transition: background .2s ease;
+}
+.fashion-slide-copy a:hover { background: rgba(255, 255, 255, .16); }
+.slider-controls {
+  position: absolute;
+  z-index: 4;
+  left: 20px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.slider-controls > button {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #9198a2;
+  color: #fff;
+  background: rgba(8, 9, 11, .8);
+  font-size: 18px;
+  cursor: pointer;
+}
+.slider-controls > button:hover,
+.slider-controls > button:focus-visible { background: #30353d; }
+.slider-dots { display: flex; align-items: center; gap: 9px; margin-inline: 8px; }
+.slider-dots button {
+  width: 8px;
+  height: 8px;
+  min-width: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: #aeb4bd;
+  cursor: pointer;
+}
+.slider-dots button[aria-current="true"] { background: #fff; transform: scale(1.35); }
+.slide-count {
+  position: absolute;
+  z-index: 4;
+  top: 18px;
+  left: 20px;
+  padding: 7px 10px;
+  color: #fff;
+  background: rgba(4, 5, 6, .58);
+  font: 11px Arial, sans-serif;
+  letter-spacing: 2px;
+}
+@media (max-width: 900px) {
+  .fashion-slider-section { padding-inline: 6vw; }
+}
+@media (max-width: 680px) {
+  .fashion-slider-section { padding: 56px 6vw 60px; }
+  .fashion-slider { min-height: 470px; }
+  .fashion-slide { min-height: 470px; }
+  .fashion-slide img { object-position: 57% center; }
+  .fashion-slide-shade { background: linear-gradient(0deg, rgba(5, 6, 8, .94) 0%, rgba(5, 6, 8, .70) 48%, rgba(5, 6, 8, .12) 100%); }
+  .fashion-slide-copy { right: 20px; left: 20px; bottom: 92px; width: auto; }
+  .fashion-slide-copy h3 { font-size: 28px; margin: 10px 0 5px; }
+  .fashion-slide-copy p { font-size: 13px !important; line-height: 1.9 !important; }
+  .fashion-slide-copy a { margin-top: 10px; padding: 7px 12px; }
+  .slider-controls { left: 12px; bottom: 12px; gap: 5px; }
+  .slider-controls > button { width: 36px; height: 36px; }
+  .slider-dots { gap: 7px; margin-inline: 4px; }
+  .slide-count { top: 12px; left: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fashion-slide { transition: none; }
+}
