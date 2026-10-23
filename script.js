@@ -196,3 +196,26 @@ if (slider) {
     sections.forEach(section => sectionObserver.observe(section));
   }
 })();
+
+
+// Card number copy helper for manual bank-transfer checkout.
+(() => {
+  const button = document.getElementById('copyCardNumber');
+  const number = document.getElementById('noventraCardNumber');
+  const feedback = document.getElementById('copyFeedback');
+  if (!button || !number || !feedback) return;
+  button.addEventListener('click', async () => {
+    const value = number.textContent.replace(/\s+/g, ' ').trim();
+    try {
+      await navigator.clipboard.writeText(value);
+      feedback.textContent = 'شماره کارت کپی شد.';
+    } catch (_) {
+      const range = document.createRange();
+      range.selectNodeContents(number);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      feedback.textContent = 'شماره کارت انتخاب شد؛ آن را کپی کنید.';
+    }
+  });
+})();
