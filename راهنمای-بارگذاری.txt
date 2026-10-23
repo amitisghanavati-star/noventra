@@ -1,0 +1,11 @@
+NOVENTRA — نسخه آماده بارگذاری
+
+مهم: این فایل ZIP را مستقیم به مخزن آپلود نکنید؛ GitHub Pages فایل‌های داخل ZIP را خودکار باز نمی‌کند.
+
+۱) ZIP را در رایانه Extract All / استخراج همه کنید.
+۲) وارد پوشه استخراج‌شده شوید. باید index.html، style.css، script.js، تصاویر، robots.txt و sitemap.xml را ببینید.
+۳) در مخزن GitHub noventra روی Add file > Upload files بزنید.
+۴) همه فایل‌ها و تصاویرِ داخل پوشه استخراج‌شده را انتخاب و بکشید داخل صفحه Upload files؛ خود پوشه مادر را آپلود نکنید.
+۵) Commit changes را بزنید.
+
+عنوان و توضیحات SEO در index.html تنظیم شده‌اند. sitemap.xml و robots.txt هم اضافه شده‌اند. ثبت در گوگل فوری نیست و رتبه تضمین نمی‌شود.
