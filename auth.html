@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090d13">
+<meta name="description" content="عضویت امن در آکادمی NOVENTRA">
+<title>عضویت و ورود | NOVENTRA</title>
+<style>
+:root{color-scheme:dark;--bg:#090d13;--panel:#111821;--line:#303946;--gold:#d8bd83;--text:#f2f0eb;--muted:#aab2bc}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at top,#1c2632 0,var(--bg) 58%);color:var(--text);font-family:Tahoma,Arial,sans-serif;display:grid;place-items:center;padding:24px}
+a{color:var(--gold)}.wrap{width:min(100%,480px)}.brand{text-align:center;margin-bottom:24px}.mark{font-family:Georgia,serif;font-size:42px;letter-spacing:8px;color:var(--gold)}.sub{font-size:11px;letter-spacing:4px;color:var(--muted);margin-top:4px}.card{background:rgba(17,24,33,.94);border:1px solid var(--line);border-radius:18px;padding:clamp(22px,6vw,38px);box-shadow:0 24px 80px #0006}h1{font-size:24px;margin:0 0 8px}p{color:var(--muted);line-height:1.9;font-size:14px}.tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:24px 0 18px}.tabs button,.submit{border:1px solid var(--line);border-radius:9px;padding:12px;background:#0b1017;color:var(--text);font:inherit;cursor:pointer}.tabs button.active,.submit{background:var(--gold);border-color:var(--gold);color:#15130e;font-weight:bold}label{display:block;font-size:13px;margin:15px 0 7px}input{width:100%;padding:13px;border-radius:8px;border:1px solid var(--line);background:#090d13;color:var(--text);font:inherit;direction:ltr;text-align:left}input:focus{outline:2px solid #d8bd8366;border-color:var(--gold)}.submit{width:100%;margin-top:22px}.small{font-size:12px}.message{margin-top:16px;padding:12px;border:1px solid var(--line);border-radius:8px;line-height:1.8;font-size:13px;overflow-wrap:anywhere}.hidden{display:none!important}.back{text-align:center;margin-top:22px;font-size:13px}.status{margin-top:14px;color:var(--gold);font-size:13px;line-height:1.8}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="brand"><div class="mark">N✳</div><div class="sub">NOVENTRA · LEARN WITH PURPOSE</div></header>
+  <section class="card">
+    <h1>به نوونترا خوش آمدی</h1>
+    <p>برای ساخت حساب یا ورود، ایمیل و گذرواژه‌ات را وارد کن. گذرواژه در سایت نوونترا ذخیره نمی‌شود؛ سرویس احراز هویت آن را مدیریت می‌کند.</p>
+    <div class="tabs" role="tablist" aria-label="نوع دسترسی">
+      <button id="signupTab" class="active" type="button">ساخت حساب</button>
+      <button id="loginTab" type="button">ورود</button>
+    </div>
+    <form id="authForm">
+      <label for="email">ایمیل</label>
+      <input id="email" name="email" type="email" autocomplete="email" required placeholder="you@example.com">
+      <label for="password">گذرواژه <span class="small" id="passwordHint">(حداقل 8 نویسه)</span></label>
+      <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+      <button class="submit" id="submitBtn" type="submit">ساخت حساب</button>
+    </form>
+    <button id="resetBtn" class="small hidden" type="button" style="margin-top:16px;background:none;border:0;color:var(--gold);cursor:pointer">فراموشی گذرواژه</button>
+    <div id="message" class="message hidden" role="status" aria-live="polite"></div>
+    <div id="status" class="status" aria-live="polite"></div>
+  </section>
+  <div class="back"><a href="./index.html">بازگشت به سایت NOVENTRA</a></div>
+</main>
+<script type="module" src="./auth.js"></script>
+</body>
+</html>
