@@ -1181,34 +1181,30 @@ body {
 @media(max-width:760px) { .hero-visual { max-width:380px; padding:16px 14px 13px; border-radius:42% 42% 4px 4px; } .couture-art { min-height:390px; } .couture-art svg { max-height:400px; } .orbit-a { width:270px;height:270px;top:65px; } .orbit-b { width:320px;height:320px;top:40px; } .fabric-chip { width:27px;height:38px; } .chip-one { right:0; } .chip-two { left:0; } .round-stamp { left:-8px; width:68px; height:68px; font-size:8px; } }
 
 
-/* NOVENTRA manual card-transfer checkout */
-.payment-section{padding:clamp(4rem,8vw,8rem) max(5%,calc((100% - 1180px)/2));background:linear-gradient(145deg,#111a25,#090d13);border-top:1px solid rgba(191,161,111,.22);border-bottom:1px solid rgba(191,161,111,.22)}
-.payment-inner{max-width:1180px;margin:0 auto}
-.payment-inner h2{font-size:clamp(2rem,4vw,3.6rem);line-height:1.35;margin:1rem 0}
-.payment-inner h2 em{color:#d6b77e;font-style:normal}
-.payment-intro{color:#b7c0ca;max-width:680px;line-height:2}
-.payment-card{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:2rem;padding:clamp(1.25rem,4vw,3rem);border:1px solid rgba(191,161,111,.35);border-radius:22px;background:rgba(255,255,255,.035);box-shadow:0 24px 70px rgba(0,0,0,.2)}
-.payment-tag,.payment-label{display:block;color:#d6b77e;font-size:.88rem;letter-spacing:.02em}
-.payment-product h3{font-size:1.5rem;margin:1rem 0 .5rem}
-.payment-product p,.payment-notice,.payment-warning{color:#b7c0ca;line-height:2}
-.payment-price{font-size:2.3rem;font-weight:800;margin-top:2rem;color:#f0d7a4}
-.payment-price small{font-size:1rem;font-weight:500}
-.payment-details{padding:1.5rem;border-radius:16px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.08)}
-.card-number{font-size:clamp(1.15rem,2.8vw,1.75rem);letter-spacing:.06em;font-weight:800;color:#fff;margin:1rem 0;white-space:nowrap}
-.payment-copy{cursor:pointer;border:0}
-.payment-notice{font-size:.92rem;margin-top:1.5rem}
-.payment-warning{font-size:.8rem;color:#9ba8b6}
-.copy-feedback{display:block;min-height:1.5rem;color:#d6b77e;font-size:.9rem}
-.shop-buy-link{display:inline-block;margin:0 1.25rem 1.25rem;color:#d6b77e;text-decoration:none}
-@media(max-width:700px){.payment-card{grid-template-columns:1fr}.payment-details{padding:1rem}.card-number{font-size:1.15rem}}
-
-
-/* Card-to-card payment account holder */
-.payment-holder {
-  margin: 10px 0 14px;
-  color: inherit;
-  font-size: 0.98rem;
+/* NOVENTRA manual purchase dialog */
+.product-price { color: #c8a56d; font-size: .92rem; white-space: nowrap; }
+.buy-button { margin: 16px 0 0; width: 100%; cursor: pointer; justify-content: center; }
+.purchase-dialog {
+  width: min(92vw, 560px); max-width: 560px; max-height: 88vh; overflow: auto;
+  border: 1px solid rgba(200,165,109,.42); border-radius: 18px; padding: 0;
+  color: #f1eee8; background: #101925; box-shadow: 0 24px 100px rgba(0,0,0,.5);
 }
-.payment-holder strong {
-  font-weight: 700;
+.purchase-dialog::backdrop { background: rgba(3,7,12,.78); backdrop-filter: blur(5px); }
+.purchase-dialog-inner { position: relative; padding: clamp(22px,5vw,36px); }
+.purchase-close { position: absolute; top: 14px; left: 16px; width: 38px; height: 38px; border-radius: 50%; border: 1px solid #536070; background: transparent; color: #fff; font-size: 25px; cursor: pointer; }
+.purchase-dialog h2 { font-size: clamp(1.6rem,4vw,2.2rem); margin: 18px 0 10px; }
+.purchase-intro { color: #c1cad4; line-height: 1.9; }
+.purchase-summary { display:flex; justify-content:space-between; align-items:center; gap:14px; padding:16px 0; margin:18px 0; border-block:1px solid rgba(200,165,109,.25); }
+.purchase-summary strong { color:#d8bb83; white-space:nowrap; }
+.card-details { display:grid; gap:10px; padding:20px; background:rgba(255,255,255,.045); border:1px solid rgba(200,165,109,.32); border-radius:12px; }
+.card-details > span, .card-details small { color:#c1cad4; }
+.card-details > strong { font:600 clamp(1.1rem,4vw,1.45rem)/1.5 ui-monospace,monospace; letter-spacing:1px; color:#f4d9a2; }
+.copy-card-button { justify-content:center; cursor:pointer; }
+.purchase-steps { padding-right:22px; color:#e0e4e9; line-height:2; }
+.purchase-warning { padding:13px 15px; border-right:3px solid #c8a56d; background:rgba(200,165,109,.08); color:#d5dce4; font-size:.88rem; line-height:1.9; }
+.purchase-done { width:100%; justify-content:center; cursor:pointer; margin-top:10px; }
+.copy-status { min-height:1.5em; color:#d8bb83; margin-bottom:0; }
+@media(max-width:520px) {
+  .purchase-summary { align-items:flex-start; flex-direction:column; }
+  .purchase-dialog { max-height:92vh; }
 }

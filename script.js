@@ -198,24 +198,46 @@ if (slider) {
 })();
 
 
-// Card number copy helper for manual bank-transfer checkout.
+/* Manual purchase information dialog. No payment is processed by this static site. */
 (() => {
-  const button = document.getElementById('copyCardNumber');
-  const number = document.getElementById('noventraCardNumber');
-  const feedback = document.getElementById('copyFeedback');
-  if (!button || !number || !feedback) return;
-  button.addEventListener('click', async () => {
-    const value = number.textContent.replace(/\s+/g, ' ').trim();
-    try {
-      await navigator.clipboard.writeText(value);
-      feedback.textContent = 'شماره کارت کپی شد.';
-    } catch (_) {
-      const range = document.createRange();
-      range.selectNodeContents(number);
-      const selection = window.getSelection();
-      selection.removeAllRanges();
-      selection.addRange(range);
-      feedback.textContent = 'شماره کارت انتخاب شد؛ آن را کپی کنید.';
-    }
+  const dialog = document.getElementById('purchaseDialog');
+  if (!dialog) return;
+  document.querySelectorAll('[data-open-purchase]').forEach(button => {
+    button.addEventListener('click', () => {
+      if (typeof dialog.showModal === 'function') dialog.showModal();
+      else dialog.setAttribute('open', '');
+    });
   });
+  document.querySelectorAll('[data-close-purchase]').forEach(button => {
+    button.addEventListener('click', () => {
+      if (typeof dialog.close === 'function') dialog.close();
+      else dialog.removeAttribute('open');
+    });
+  });
+  dialog.addEventListener('click', event => {
+    if (event.target === dialog) dialog.close();
+  });
+  const copyButton = document.getElementById('copyCardButton');
+  const cardNumber = document.getElementById('purchaseCardNumber');
+  const status = document.getElementById('copyCardStatus');
+  if (copyButton && cardNumber) {
+    copyButton.addEventListener('click', async () => {
+      const number = cardNumber.textContent.replace(/\s+/g, '');
+      try {
+        await navigator.clipboard.writeText(number);
+        if (status) status.textContent = 'شماره کارت کپی شد.';
+      } catch (_) {
+        const field = document.createElement('textarea');
+        field.value = number;
+        field.setAttribute('readonly', '');
+        field.style.position = 'fixed';
+        field.style.opacity = '0';
+        document.body.appendChild(field);
+        field.select();
+        const copied = document.execCommand('copy');
+        field.remove();
+        if (status) status.textContent = copied ? 'شماره کارت کپی شد.' : 'شماره کارت را دستی انتخاب و کپی کن.';
+      }
+    });
+  }
 })();
