@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#090d13">
+<meta name="robots" content="noindex,follow">
+<title>حساب کاربری | NOVENTRA</title>
+<link rel="stylesheet" href="style.css?v=20261024-account">
+<style>
+.account-page{min-height:100vh;background:#090d13;color:#edf0f4;padding:32px 18px 64px;display:grid;place-items:center}
+.account-wrap{width:min(100%,560px);margin:auto}
+.account-brand{display:flex;justify-content:center;margin-bottom:24px;text-decoration:none;color:#edf0f4}
+.account-card{border:1px solid rgba(191,161,111,.32);background:linear-gradient(145deg,rgba(255,255,255,.045),rgba(255,255,255,.012));padding:clamp(22px,5vw,42px);border-radius:18px;box-shadow:0 24px 80px rgba(0,0,0,.25)}
+.account-card h1{font-size:clamp(25px,5vw,36px);margin:10px 0 12px}
+.account-lead{color:#b6c2d1;line-height:1.9;margin-bottom:24px}
+.account-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px}
+.account-tabs button,.account-field input,.account-submit,.account-secondary{font:inherit}
+.account-tabs button{background:transparent;border:1px solid #3b4654;color:#c5ced8;padding:12px;border-radius:9px;cursor:pointer}
+.account-tabs button.active{background:#e7d5b4;color:#10141b;border-color:#e7d5b4}
+.account-field{display:block;margin:16px 0;color:#d9dfe7;font-size:14px}
+.account-field input{display:block;width:100%;box-sizing:border-box;margin-top:8px;background:#0c121b;border:1px solid #384352;color:#fff;padding:13px;border-radius:9px;direction:ltr;text-align:left}
+.account-field input:focus{outline:2px solid #bfa16f;outline-offset:2px}
+.account-submit{width:100%;border:0;background:#e7d5b4;color:#111720;padding:14px;border-radius:9px;cursor:pointer;font-weight:700;margin-top:10px}
+.account-submit:disabled,.account-tabs button:disabled{opacity:.5;cursor:not-allowed}
+.account-secondary{background:transparent;border:0;color:#d8b77b;text-decoration:underline;cursor:pointer;margin-top:14px;padding:8px}
+.account-message{padding:12px;border-radius:8px;margin:0 0 18px;line-height:1.8;font-size:14px}
+.account-message[data-kind=warning]{background:#382d1d;color:#ffe2a9}
+.account-message[data-kind=error]{background:#3a2024;color:#ffc5ca}
+.account-message[data-kind=success]{background:#18362b;color:#c1f4d8}
+.account-message[data-kind=info]{background:#172432;color:#d7e9ff}
+.account-foot{color:#9daaba;font-size:12px;line-height:1.8;margin-top:22px;text-align:center}
+.account-foot a{color:#e7d5b4}
+.account-return{display:inline-block;color:#e7d5b4;margin-bottom:18px;text-decoration:none}
+.account-user{padding:16px;border:1px solid #384352;border-radius:10px;margin:18px 0;overflow-wrap:anywhere}
+[hidden]{display:none!important}
+</style>
+</head>
+<body class="account-page">
+<main class="account-wrap">
+<a class="account-return" href="index.html">← بازگشت به NOVENTRA</a>
+<a class="account-brand logo" href="index.html" aria-label="NOVENTRA"><span class="logo-symbol">N<span>✳</span></span><span class="logo-type">NOVENTRA<small>THE ART OF MAKING</small></span></a>
+<section class="account-card">
+<div class="section-kicker">NOVENTRA / MEMBER ATELIER</div>
+<h1>فضای یادگیری تو</h1>
+<p class="account-lead">حساب بساز تا در مسیر آموزشی نوونترا همراه ما باشی.</p>
+<div id="accountStatus" class="account-message" role="status" aria-live="polite" hidden></div>
+<div class="account-tabs" role="group" aria-label="انتخاب عملیات">
+<button type="button" data-auth-mode="signup" class="active" aria-pressed="true">ساخت حساب</button>
+<button type="button" data-auth-mode="login" aria-pressed="false">ورود</button>
+</div>
+<form id="accountForm">
+<label class="account-field">ایمیل
+<input id="accountEmail" type="email" autocomplete="email" required placeholder="you@example.com">
+</label>
+<label class="account-field">رمز عبور
+<input id="accountPassword" type="password" autocomplete="new-password" minlength="10" required placeholder="حداقل ۱۰ نویسه">
+</label>
+<label class="account-field" id="passwordConfirmWrap">تکرار رمز عبور
+<input id="passwordConfirm" type="password" autocomplete="new-password" minlength="10" required placeholder="رمز را دوباره وارد کن">
+</label>
+<button class="account-submit" id="accountSubmit" type="submit">ساخت حساب کاربری</button>
+<div style="text-align:center"><button class="account-secondary" id="forgotPassword" type="button">رمزم را فراموش کرده‌ام</button></div>
+</form>
+<form id="newPasswordForm" hidden>
+<label class="account-field">رمز عبور جدید
+<input id="newPassword" type="password" minlength="10" autocomplete="new-password" required>
+</label>
+<label class="account-field">تکرار رمز جدید
+<input id="newPasswordConfirm" type="password" minlength="10" autocomplete="new-password" required>
+</label>
+<button class="account-submit" id="saveNewPassword" type="submit">ذخیرهٔ رمز جدید</button>
+</form>
+<section id="accountPanel" hidden>
+<p>به حساب NOVENTRA خوش آمدی.</p>
+<div class="account-user">ایمیل حساب: <strong id="signedInEmail"></strong></div>
+<p class="account-lead">امکان ورود فعال است. بخش خریدها و فایل‌های آموزشی پس از اتصال سامانهٔ فروش به حساب کاربری اضافه می‌شود.</p>
+<button class="account-submit" id="signOutButton" type="button">خروج از حساب</button>
+</section>
+<p class="account-foot">با ساخت حساب، اطلاعات ورودت توسط سرویس احراز هویت نگهداری می‌شود. رمز عبور خود را با هیچ‌کس به اشتراک نگذار.<br>برای دسترسی به درس‌ها و فایل‌ها، به <a href="index.html#shop">فروشگاه NOVENTRA</a> سر بزن.</p>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="auth-config.js?v=1"></script>
+<script src="account.js?v=1"></script>
+</body>
+</html>
