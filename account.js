@@ -93,8 +93,8 @@
         if (data.session && data.user) {
           showSignedIn(data.user);
         } else {
-          message("درخواست ثبت‌نام ارسال شد. ایمیلت را باز کن و لینک تأیید را بزن؛ سپس وارد حساب شو.", "success");
           setMode("login");
+          message("درخواست ثبت‌نام ارسال شد. ایمیلت را باز کن و لینک تأیید را بزن؛ سپس وارد حساب شو.", "success");
         }
       } else {
         const { data, error } = await client.auth.signInWithPassword({ email, password });
