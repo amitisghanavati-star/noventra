@@ -2,9 +2,8 @@ import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 
 // After creating your Supabase project, replace these two public project values.
 // Never place a service_role/secret key in browser code or in this repository.
-const SUPABASE_URL = "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
-const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY_HERE";
-
+const SUPABASE_URL = "https://ialzfpmlagqnkfiivqaf.supabase.co";
+const SUPABASE_ANON_KEY = "کلید عمومی‌ای که از Supabase کپی کردی";
 const signupTab = document.getElementById("signupTab");
 const loginTab = document.getElementById("loginTab");
 const form = document.getElementById("authForm");
