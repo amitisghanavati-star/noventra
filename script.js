@@ -204,6 +204,11 @@ if (slider) {
   if (!dialog) return;
   document.querySelectorAll('[data-open-purchase]').forEach(button => {
     button.addEventListener('click', () => {
+      const isChapterTwo = button.dataset.product === 'chapter2';
+      const title = document.getElementById('purchaseTitle');
+      const summary = dialog.querySelector('.purchase-summary span');
+      if (title) title.textContent = isChapterTwo ? 'خرید فصل دوم خیاطی' : 'خرید فصل اول خیاطی';
+      if (summary) summary.textContent = isChapterTwo ? 'فصل دوم آموزش خیاطی NOVENTRA (PDF/ZIP)' : 'فصل اول آموزش خیاطی NOVENTRA (PDF)';
       if (typeof dialog.showModal === 'function') dialog.showModal();
       else dialog.setAttribute('open', '');
     });
