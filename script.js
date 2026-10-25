@@ -91,6 +91,17 @@ if (languageToggle) {
   if (savedLanguage !== 'fa') setLanguage(savedLanguage);
 }
 
+// Robust navigation for the membership button and other in-page links.
+document.querySelectorAll('a[href="#join"]').forEach(link => {
+  link.addEventListener('click', event => {
+    const target = document.getElementById('join');
+    if (!target) return;
+    event.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (window.history && window.history.replaceState) window.history.replaceState(null, '', '#join');
+  });
+});
+
 const toggle = document.getElementById('menuToggle');
 const nav = document.getElementById('nav');
 if (toggle && nav) {
