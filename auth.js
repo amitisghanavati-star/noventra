@@ -1,102 +1,56 @@
-import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { firebaseConfig } from "./firebase-config.js";
 
-// After creating your Supabase project, replace these two public project values.
-// Never place a service_role/secret key in browser code or in this repository.
-const SUPABASE_URL = "https://ialzfpmlagqnkfiivqaf.supabase.co";
-const SUPABASE_ANON_KEY = "کلید عمومی‌ای که از Supabase کپی کردی";
-const signupTab = document.getElementById("signupTab");
-const loginTab = document.getElementById("loginTab");
-const form = document.getElementById("authForm");
-const emailInput = document.getElementById("email");
-const passwordInput = document.getElementById("password");
-const submitBtn = document.getElementById("submitBtn");
-const resetBtn = document.getElementById("resetBtn");
-const message = document.getElementById("message");
-const status = document.getElementById("status");
-let mode = "signup";
-let supabase = null;
-
-function showMessage(text) {
-  message.textContent = text;
-  message.classList.remove("hidden");
+const dialog = document.getElementById('authDialog');
+const form = document.getElementById('authForm');
+const status = document.getElementById('authStatus');
+const nameInput = document.getElementById('authName');
+const emailInput = document.getElementById('authEmail');
+const passwordInput = document.getElementById('authPassword');
+const confirmInput = document.getElementById('authConfirm');
+const confirmLabel = document.getElementById('authConfirmLabel');
+const submit = document.getElementById('authSubmit');
+let mode = 'signup';
+let auth = null;
+const configReady = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes('PASTE_') && firebaseConfig.projectId && !firebaseConfig.projectId.includes('PASTE_') && firebaseConfig.appId && !firebaseConfig.appId.includes('PASTE_');
+if (configReady) { try { auth = getAuth(initializeApp(firebaseConfig)); } catch (e) { console.error(e); } }
+function message(text, error=false) { status.textContent=text; status.classList.toggle('error',error); }
+function setMode(next) {
+  mode=next;
+  document.querySelectorAll('[data-auth-mode]').forEach(b=>b.classList.toggle('active',b.dataset.authMode===mode));
+  nameInput.required=mode==='signup'; nameInput.hidden=mode==='login';
+  document.querySelector('label[for="authName"]').hidden=mode==='login';
+  confirmInput.required=mode==='signup'; confirmInput.hidden=mode==='login'; confirmLabel.hidden=mode==='login';
+  passwordInput.autocomplete=mode==='signup'?'new-password':'current-password';
+  submit.textContent=mode==='signup'?'ایجاد حساب رایگان':'ورود به حساب';
+  message('');
 }
-function setMode(nextMode) {
-  mode = nextMode;
-  const signup = mode === "signup";
-  signupTab.classList.toggle("active", signup);
-  loginTab.classList.toggle("active", !signup);
-  submitBtn.textContent = signup ? "ساخت حساب" : "ورود امن";
-  passwordInput.autocomplete = signup ? "new-password" : "current-password";
-  resetBtn.classList.toggle("hidden", signup);
-  document.getElementById("passwordHint").textContent = signup ? "(حداقل 8 نویسه)" : "";
-  message.classList.add("hidden");
-}
-signupTab.addEventListener("click", () => setMode("signup"));
-loginTab.addEventListener("click", () => setMode("login"));
-
-if (SUPABASE_URL.startsWith("https://") && !SUPABASE_URL.includes("PASTE_") && SUPABASE_ANON_KEY && !SUPABASE_ANON_KEY.includes("PASTE_")) {
-  supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
-    auth: { autoRefreshToken: true, persistSession: true, detectSessionInUrl: true }
-  });
-  supabase.auth.getSession().then(({ data, error }) => {
-    if (error) status.textContent = "وضعیت ورود بررسی نشد. لطفاً دوباره تلاش کن.";
-    else if (data.session) status.textContent = "وارد حساب خودت هستی: " + (data.session.user.email || "");
-  });
-  supabase.auth.onAuthStateChange((event, session) => {
-    if (event === "SIGNED_IN" && session) status.textContent = "ورود موفق بود: " + (session.user.email || "");
-  });
-} else {
-  status.textContent = "اتصال سرویس هنوز کامل نشده است. ابتدا پروژه Supabase بساز و سپس آدرس پروژه و کلید عمومی آن را در auth.js قرار بده.";
-  submitBtn.disabled = true;
-  submitBtn.textContent = "در انتظار اتصال سرویس";
-}
-
-form.addEventListener("submit", async (event) => {
-  event.preventDefault();
-  if (!supabase) return;
-  const email = emailInput.value.trim();
-  const password = passwordInput.value;
-  submitBtn.disabled = true;
-  submitBtn.textContent = "در حال بررسی…";
-  message.classList.add("hidden");
-  try {
-    if (mode === "signup") {
-      const { data, error } = await supabase.auth.signUp({ email, password });
-      if (error) throw error;
-      showMessage(data.session
-        ? "حساب ساخته شد و وارد شدی."
-        : "درخواست ساخت حساب ثبت شد. ایمیلت را بررسی کن و اگر پیام تأیید آمد، لینک آن را باز کن.");
-    } else {
-      const { error } = await supabase.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      showMessage("ورود با موفقیت انجام شد.");
-    }
-  } catch (error) {
-    showMessage(error?.message || "عملیات انجام نشد. لطفاً دوباره تلاش کن.");
-  } finally {
-    submitBtn.disabled = false;
-    submitBtn.textContent = mode === "signup" ? "ساخت حساب" : "ورود امن";
-  }
+document.querySelectorAll('[data-open-auth]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault(); if(dialog?.showModal) dialog.showModal(); else dialog?.setAttribute('open','');}));
+document.querySelectorAll('[data-close-auth]').forEach(el=>el.addEventListener('click',()=>dialog?.close()));
+dialog?.addEventListener('click',e=>{if(e.target===dialog) dialog.close();});
+document.querySelectorAll('[data-auth-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.authMode)));
+if (!configReady) message('فرم آماده است؛ برای فعال‌شدن حساب واقعی، تنظیمات Firebase را طبق راهنمای داخل ZIP تکمیل کن.');
+if (auth) onAuthStateChanged(auth,user=>{
+  const existing=document.getElementById('memberStatus');
+  if(existing) existing.remove();
+  if(user){ const el=document.createElement('p'); el.id='memberStatus'; el.className='member-status'; el.textContent=`وارد شده‌ای: ${user.displayName || user.email}`; document.querySelector('.header-actions')?.append(el); }
 });
-
-resetBtn.addEventListener("click", async () => {
-  if (!supabase) return;
-  const email = emailInput.value.trim();
-  if (!email) {
-    showMessage("ابتدا ایمیلت را در کادر ایمیل وارد کن.");
-    emailInput.focus();
-    return;
-  }
-  resetBtn.disabled = true;
-  try {
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: window.location.origin + window.location.pathname
-    });
-    if (error) throw error;
-    showMessage("اگر این ایمیل در سرویس ثبت شده باشد، دستور بازیابی گذرواژه برایش ارسال می‌شود.");
-  } catch (error) {
-    showMessage(error?.message || "ارسال درخواست بازیابی انجام نشد.");
-  } finally {
-    resetBtn.disabled = false;
-  }
+form?.addEventListener('submit',async e=>{
+ e.preventDefault();
+ if(!auth){message('حساب‌سازی هنوز فعال نشده است. ابتدا Firebase را طبق راهنما تنظیم کن.',true);return;}
+ const email=emailInput.value.trim(); const password=passwordInput.value;
+ if(mode==='signup' && password!==confirmInput.value){message('رمز عبور و تکرار آن یکسان نیستند.',true);return;}
+ submit.disabled=true; submit.textContent='لطفاً صبر کن…';
+ try {
+  if(mode==='signup'){
+   const credential=await createUserWithEmailAndPassword(auth,email,password);
+   await updateProfile(credential.user,{displayName:nameInput.value.trim()});
+   message('عضویت رایگان با موفقیت انجام شد. خوش آمدی!');
+  } else { await signInWithEmailAndPassword(auth,email,password); message('ورود با موفقیت انجام شد. خوش آمدی!'); }
+  form.reset(); setTimeout(()=>dialog?.close(),1400);
+ } catch(err){
+  const messages={ 'auth/email-already-in-use':'این ایمیل قبلاً ثبت شده است. از بخش ورود استفاده کن.','auth/invalid-email':'فرمت ایمیل درست نیست.','auth/weak-password':'رمز عبور باید حداقل ۶ نویسه باشد.','auth/invalid-credential':'ایمیل یا رمز عبور درست نیست.','auth/network-request-failed':'اتصال اینترنت را بررسی کن.'};
+  message(messages[err.code] || 'ثبت‌نام/ورود انجام نشد. تنظیمات Firebase و روش ورود ایمیلی را بررسی کن.',true);
+ } finally { submit.disabled=false; submit.textContent=mode==='signup'?'ایجاد حساب رایگان':'ورود به حساب'; }
 });
