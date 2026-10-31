@@ -1,10 +1,10 @@
 /* NOVENTRA bilingual interface: Persian (RTL) / English (LTR). */
 const languageToggle = document.getElementById('languageToggle');
 const translations = {
-  '.main-nav a': ['Academy','Fashion gallery','Pattern systems','Shop','Library','About','Join'],
+  '.main-nav a': ['Academy','Languages','Fashion gallery','Pattern systems','Shop','Library','About','Join'],
   '.hero-copy > .eyebrow': ['KNOWLEDGE, PRECISION, CREATIVITY <span class="eyebrow-en">EST. 2026</span>'],
   '.hero h1': ['Clothing is not just sewn;<br><em>it is constructed.</em>'],
-  '.hero-intro': ['Welcome to NOVENTRA — a place to understand the logic behind every pattern line, explore fabrics, and make garments that fit beautifully.'],
+  '.hero-intro': ['Welcome to NOVENTRA — a place to learn, practice, and create across sewing, cooking, technology, and human languages.'],
   '.hero-buttons .btn': ['Learning path <span>↙</span>'],
   '.hero-buttons .text-link': ['The NOVENTRA story <span>←</span>'],
   '.hero-note': ['Start with the basics; grow your skills step by step.'],
@@ -43,7 +43,7 @@ const translations = {
   '.shop-item-meta > span': ['Coming soon','Coming soon','Coming soon'],
   '.about-copy .section-kicker': ['A NOTE ABOUT NOVENTRA'],
   '.about-copy h2': ['Do more than draw a pattern;<br><em>understand every line.</em>'],
-  '.about-copy p': ['NOVENTRA is built on the belief that good teaching explains not only what to do, but why it matters. Our goal is to create a clear, precise, and creative resource for learning sewing and fashion design.'],
+  '.about-copy p': ['NOVENTRA is built on the belief that good teaching explains not only what to do, but why it matters. Our goal is to create a clear, precise, and creative resource for learning sewing, cooking, programming, and human languages.'],
   '.about-copy .text-link': ['Join the journey <span>←</span>'],
   '.join-section .section-kicker': ['THE NEXT STITCH / 05'],
   '.join-section h2': ['Every expert<br>once started <em>at the beginning.</em>'],
