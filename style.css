@@ -1237,12 +1237,14 @@ body {
 .worlds-heading h2 { margin:12px 0; color:var(--white); font-size:clamp(30px,4vw,48px); font-weight:500; }
 .worlds-heading h2 em { color:var(--accent); font-style:normal; }
 .worlds-heading p { color:#aeb8c6; font-size:14px; }
-.worlds-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:18px; max-width:1180px; margin:auto; }
+.worlds-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; max-width:1180px; margin:auto; }
 .world-card { display:flex; flex-direction:column; min-height:310px; padding:26px; text-decoration:none; border:1px solid rgba(214,183,123,.28); background:linear-gradient(150deg,rgba(24,37,55,.96),rgba(10,16,25,.98)); transition:transform .25s,border-color .25s,box-shadow .25s; }
 .world-card:hover { transform:translateY(-6px); border-color:var(--accent); box-shadow:0 22px 55px rgba(0,0,0,.28); }
 .world-index { color:#aab8ca; font:10px Arial,sans-serif; letter-spacing:1.8px; }
 .world-symbol { display:grid; place-items:center; width:58px; height:58px; margin:26px 0 14px; border:1px solid rgba(214,183,123,.55); color:var(--accent); font:26px Georgia,serif; }
 .world-programming .world-symbol { font: bold 22px ui-monospace,monospace; }
+.world-languages .world-symbol { font: 25px Georgia,serif; }
+.branch-languages { background:linear-gradient(110deg,rgba(24,31,43,.96),rgba(13,24,34,.94)); }
 .world-card h3 { margin:0 0 8px; color:#f4f6fa; font:600 20px Georgia,serif; letter-spacing:.2px; }
 .world-card p { flex:1; margin:0 0 22px; color:#aeb8c6; font-size:13px; line-height:2.2; }
 .world-link { display:flex; justify-content:space-between; padding-top:13px; border-top:1px solid var(--line); color:#e7d2aa; font-size:12px; }
@@ -1255,6 +1257,9 @@ body {
 .branch-detail-section h2 em { color:var(--accent); font-style:normal; }
 .branch-detail-section p { max-width:760px; color:#aeb8c6; font-size:14px; line-height:2.2; }
 .branch-status { display:inline-block; margin-top:5px; padding:5px 11px; border:1px solid rgba(214,183,123,.3); color:#d7c29d; font-size:11px; }
+@media(max-width:1000px) {
+ .worlds-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
 @media(max-width:760px) {
  .worlds-section { padding:60px 6%; }
  .worlds-grid { grid-template-columns:1fr; }
