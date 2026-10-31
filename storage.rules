@@ -1,0 +1,35 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    function signedIn() { return request.auth != null; }
+    function isModerator() {
+      return signedIn() && (
+        request.auth.token.role == 'admin' ||
+        request.auth.token.role == 'moderator'
+      );
+    }
+
+    // Uploads remain private until trusted backend review and publication.
+    match /quarantine/{uid}/{fileId} {
+      allow create: if signedIn()
+        && request.auth.uid == uid
+        && request.resource.size > 0
+        && request.resource.size <= 25 * 1024 * 1024
+        && request.resource.contentType.matches(
+          'image/(jpeg|png|webp)|application/pdf|application/zip|application/x-zip-compressed|text/plain|text/markdown|text/x-python|text/x-c|text/x-c\\+\\+|application/javascript'
+        );
+      allow read: if signedIn() && (request.auth.uid == uid || isModerator());
+      allow update, delete: if false;
+    }
+
+    // Only trusted server code (Admin SDK) may write to published/.
+    match /published/{fileId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
