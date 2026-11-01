@@ -35,6 +35,7 @@ const translations = {
   '.archive-list a strong': ['The sewing handbook','Technical glossary','Practice worksheets'],
   '.archive-list a small': ['Tools, measurements, patterns, cutting, and sewing','Persian and English sewing terminology','Step-by-step exercises and checklists'],
   '.archive-note': ['Educational content will be added progressively.'],
+  '.branch-programming .branch-status': ['Read Chapter One — Programming (PDF) ↗'],
   '.shop-section .section-kicker': ['THE DIGITAL ATELIER / 04'],
   '.shop-heading h2': ['Tools for<br><em>your journey.</em>'],
   '.shop-heading > p': ['Digital files, notes, and practical resources. Online sales will launch when the products and payment process are ready.'],
