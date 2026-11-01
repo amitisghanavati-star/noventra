@@ -284,6 +284,11 @@ if (slider) {
   const quick = document.getElementById('noventraAIQuick');
   let recognition = null;
   let lastReply = '';
+  let libraryCatalog = null;
+  fetch('knowledge/noventra-library.json')
+    .then(response => { if (!response.ok) throw new Error('Library catalog unavailable'); return response.json(); })
+    .then(data => { libraryCatalog = data; })
+    .catch(() => { libraryCatalog = null; });
   const isEnglish = () => document.documentElement.lang === 'en';
   const copy = {
     fa: {
@@ -369,6 +374,20 @@ if (slider) {
     const reply = (fa, english) => en ? english : fa;
 
     // Respond to the learner's actual intent before classifying the subject.
+    // Answer catalog questions from the published, versioned NOVENTRA knowledge file.
+    if (libraryCatalog && has('چه شاخه','چه دوره','چه فصل','کدام فصل','چه فایل','فایل های منتشر','فایل‌های منتشر','منتشر شده','منتشرشده','what courses','which courses','published files','available chapters')) {
+      const lines = libraryCatalog.branches.map(branch => {
+        const published = branch.published.map(item => en
+          ? 'Chapter ' + item.chapter + ': ' + item.title_en
+          : 'فصل ' + item.chapter + ': ' + item.title_fa).join('، ');
+        const status = published || (en ? 'No chapter PDF published yet' : 'هنوز فایل فصل منتشر نشده');
+        return (en ? branch.name + ': ' : branch.name_fa + ': ') + status;
+      });
+      return lines.join('\\n') + (en
+        ? '\\nOnly listed files are confirmed as published.'
+        : '\\nاین فهرست فقط فایل‌های ثبت‌شده و منتشرشده را تأیید می‌کند.');
+    }
+
     if (has('سلام','درود','صبح بخیر','عصر بخیر','شب بخیر','hello','hi','hey','good morning')) {
       return reply(
         'سلام، خوش آمدی! 😊 بگو دنبال یادگیری چه چیزی هستی یا در کدام قسمت سایت به راهنمایی نیاز داری.',
