@@ -1267,3 +1267,44 @@ body {
  .branch-detail-section { grid-template-columns:1fr; gap:18px; padding:42px 7%; }
  .branch-detail-mark { width:78px; height:78px; font-size:19px; }
 }
+
+
+/* NOVENTRA AI — elegant floating student-guide interface */
+.noventra-ai { --nai-gold:#c9aa75; --nai-ink:#0b111a; --nai-panel:#111b29; --nai-line:rgba(201,170,117,.32); position:fixed; z-index:500; right:26px; bottom:24px; direction:rtl; font-family:inherit; }
+.noventra-ai-launcher { display:flex; align-items:center; gap:11px; padding:9px 17px 9px 12px; border:1px solid rgba(201,170,117,.72); border-radius:40px; color:#f5f0e6; background:linear-gradient(135deg,#1a2635,#080d15); box-shadow:0 12px 38px rgba(0,0,0,.34),0 0 24px rgba(201,170,117,.08); cursor:pointer; transition:transform .2s,border-color .2s,box-shadow .2s; }
+.noventra-ai-launcher:hover { transform:translateY(-3px); border-color:#e2c895; box-shadow:0 16px 42px rgba(0,0,0,.4),0 0 28px rgba(201,170,117,.15); }
+.noventra-ai-launcher-mark,.noventra-ai-mini-mark { display:grid; place-items:center; width:38px; height:38px; border:1px solid rgba(201,170,117,.65); color:#f1dfbd; font:700 20px Georgia,serif; }
+.noventra-ai-launcher-mark span { color:var(--nai-gold); }
+.noventra-ai-launcher-label { font:700 11px Arial,sans-serif; letter-spacing:1.5px; }
+.noventra-ai-panel { position:absolute; right:0; bottom:66px; display:flex; flex-direction:column; width:min(390px,calc(100vw - 30px)); height:min(570px,calc(100dvh - 115px)); min-height:420px; overflow:hidden; border:1px solid var(--nai-line); border-radius:18px; color:#f3f0e9; background:linear-gradient(160deg,#142033 0%,#0b111a 65%,#101722 100%); box-shadow:0 24px 80px rgba(0,0,0,.55); }
+.noventra-ai-panel[hidden] { display:none; }
+.noventra-ai-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:16px 17px; border-bottom:1px solid var(--nai-line); background:rgba(255,255,255,.025); }
+.noventra-ai-brand { display:flex; align-items:center; gap:11px; direction:ltr; }
+.noventra-ai-mini-mark { width:36px; height:36px; color:var(--nai-gold); font-size:16px; }
+.noventra-ai-brand strong { display:block; font:700 12px Arial,sans-serif; letter-spacing:1.5px; }
+.noventra-ai-brand small { display:block; margin-top:5px; color:#aeb9c8; font:8px Arial,sans-serif; letter-spacing:1px; }
+.noventra-ai-close { width:32px; height:32px; border:1px solid rgba(255,255,255,.16); border-radius:50%; color:#eee; background:transparent; font-size:22px; cursor:pointer; }
+.noventra-ai-welcome { display:flex; align-items:flex-start; gap:8px; padding:13px 17px 10px; color:#c6ced8; font-size:11px; line-height:1.9; }
+.noventra-ai-online { flex:0 0 7px; width:7px; height:7px; margin-top:8px; border-radius:50%; background:#9bc6a4; box-shadow:0 0 10px rgba(155,198,164,.6); }
+.noventra-ai-messages { display:flex; flex:1; flex-direction:column; gap:10px; overflow:auto; padding:12px 15px; scrollbar-width:thin; scrollbar-color:#536174 transparent; }
+.noventra-ai-message { max-width:88%; padding:10px 13px; border:1px solid rgba(255,255,255,.08); border-radius:13px 13px 3px 13px; color:#e9edf2; background:rgba(255,255,255,.055); font-size:12px; line-height:2; white-space:pre-wrap; overflow-wrap:anywhere; }
+.noventra-ai-message.user { align-self:flex-start; border-color:rgba(201,170,117,.28); border-radius:13px 13px 13px 3px; background:rgba(201,170,117,.12); }
+.noventra-ai-message.assistant { align-self:flex-end; }
+.noventra-ai-message a { color:#e7c991; text-decoration:underline; text-underline-offset:3px; }
+.noventra-ai-quick { display:flex; flex-wrap:wrap; gap:7px; padding:5px 14px 12px; }
+.noventra-ai-quick button { padding:6px 10px; border:1px solid rgba(201,170,117,.32); border-radius:30px; color:#e5d3b3; background:transparent; font:10px inherit; cursor:pointer; }
+.noventra-ai-quick button:hover { background:rgba(201,170,117,.12); }
+.noventra-ai-compose { display:flex; align-items:center; gap:8px; margin:0 12px 10px; padding:7px; border:1px solid rgba(201,170,117,.35); border-radius:13px; background:rgba(0,0,0,.2); }
+.noventra-ai-compose input { flex:1; min-width:0; border:0; outline:0; color:#fff; background:transparent; font:12px inherit; }
+.noventra-ai-compose input::placeholder { color:#8995a5; }
+.noventra-ai-voice,.noventra-ai-send { display:grid; flex:0 0 34px; place-items:center; width:34px; height:34px; border:1px solid rgba(201,170,117,.35); border-radius:9px; color:#e7d0a7; background:rgba(201,170,117,.08); font-size:18px; cursor:pointer; }
+.noventra-ai-voice.is-listening { color:#fff; background:#8a4a4a; border-color:#d18c8c; animation:nai-pulse 1.2s infinite; }
+.noventra-ai-send { color:#101722; background:var(--nai-gold); font-size:22px; font-weight:700; }
+.noventra-ai-foot { padding:0 14px 11px; color:#8793a3; text-align:center; font-size:9px; }
+@keyframes nai-pulse { 50% { box-shadow:0 0 0 5px rgba(209,140,140,.13); } }
+html[lang="en"] .noventra-ai { direction:ltr; right:auto; left:26px; }
+html[lang="en"] .noventra-ai-panel { right:auto; left:0; }
+html[lang="en"] .noventra-ai-message { border-radius:13px 13px 13px 3px; }
+html[lang="en"] .noventra-ai-message.user { border-radius:13px 13px 3px 13px; }
+@media(max-width:520px) { .noventra-ai { right:13px; bottom:13px; } html[lang="en"] .noventra-ai { right:auto; left:13px; } .noventra-ai-panel { bottom:62px; height:min(570px,calc(100dvh - 95px)); min-height:390px; } .noventra-ai-launcher-label { font-size:10px; } }
+@media(prefers-reduced-motion:reduce) { .noventra-ai-launcher,.noventra-ai-voice { transition:none; animation:none; } }
