@@ -266,3 +266,158 @@ if (slider) {
     });
   }
 })();
+
+
+/* NOVENTRA AI Guide — guided FAQ prototype with optional browser voice */
+(() => {
+  const root = document.getElementById('noventraAI');
+  if (!root) return;
+  const launcher = document.getElementById('noventraAILauncher');
+  const panel = document.getElementById('noventraAIPanel');
+  const close = document.getElementById('noventraAIClose');
+  const form = document.getElementById('noventraAIForm');
+  const input = document.getElementById('noventraAIInput');
+  const messages = document.getElementById('noventraAIMessages');
+  const voice = document.getElementById('noventraAIVoice');
+  const welcome = document.getElementById('noventraAIWelcome');
+  const first = document.getElementById('noventraAIFirstMessage');
+  const quick = document.getElementById('noventraAIQuick');
+  let recognition = null;
+  let lastReply = '';
+  const isEnglish = () => document.documentElement.lang === 'en';
+  const copy = {
+    fa: {
+      welcome:'سلام! من راهنمای هوشمند نوونترا هستم. برای پیدا کردن مسیر یادگیری یا بخش موردنظرت کمکت می‌کنم.',
+      first:'از کدام بخش نوونترا می‌خواهی شروع کنی؟',
+      placeholder:'پیامت را بنویس...',
+      foot:'راهنمای نسخهٔ آغازین · پاسخ‌گویی صوتی در مرورگرهای پشتیبانی‌شده',
+      branches:'نوونترا چهار مسیر آموزشی دارد: خیاطی، آشپزی، برنامه‌نویسی و زبان‌های انسانی. از بخش «شاخه‌های نوونترا» در صفحه می‌توانی وارد هر مسیر شوی.',
+      sewing:'برای ورود به مسیر خیاطی، بخش خیاطی و کتابخانه را ببین. فایل فصل اول خیاطی از لینک «مطالعهٔ فصل اول خیاطی NOVENTRA» در صفحه در دسترس است.',
+      cooking:'برای آشپزی به بخش NOVENTRA Kitchen برو. فایل PDF فصل اول آشپزی در همان بخش قرار دارد.',
+      programming:'برای برنامه‌نویسی وارد بخش NOVENTRA Programming شو. فایل PDF فصل اول برنامه‌نویسی از لینک همان بخش باز می‌شود.',
+      languages:'مسیر NOVENTRA Languages برای زبان‌های انسانی است؛ زبان‌های برنامه‌نویسی در شاخهٔ Programming قرار می‌گیرند.',
+      files:'فایل‌های آموزشی در بخش مربوط به هر شاخه قرار دارند. در حال حاضر PDF فصل اول خیاطی، آشپزی و برنامه‌نویسی منتشر شده است.',
+      join:'برای عضویت، دکمهٔ «عضویت» در منوی بالای سایت یا «عضویت رایگان» در پایین صفحه را انتخاب کن.',
+      shop:'برای خرید فایل‌ها، بخش فروشگاه را ببین. روش پرداخت و دسترسی هر محصول در همان بخش توضیح داده می‌شود.',
+      fallback:'می‌توانم دربارهٔ شاخه‌های آموزشی، خیاطی، آشپزی، برنامه‌نویسی، زبان‌ها، فایل‌ها و عضویت راهنمایی‌ات کنم. لطفاً سؤال را کمی دقیق‌تر بپرس.'
+    },
+    en: {
+      welcome:'Hello! I’m the NOVENTRA learning guide. I can help you find a learning path or locate a section of the site.',
+      first:'Which NOVENTRA learning path would you like to explore?',
+      placeholder:'Write your message...',
+      foot:'Early guide edition · Voice supported in compatible browsers',
+      branches:'NOVENTRA offers four learning paths: Sewing, Cooking, Programming, and human Languages. Choose a path from the NOVENTRA branches section.',
+      sewing:'Explore the Sewing section and Library. The first NOVENTRA Sewing chapter PDF is linked on the page.',
+      cooking:'Visit NOVENTRA Kitchen. The first Cooking chapter PDF is available in that section.',
+      programming:'Visit NOVENTRA Programming. The first Programming chapter PDF is linked in that section.',
+      languages:'NOVENTRA Languages is for human languages. Programming languages belong in the Programming branch.',
+      files:'Learning files are listed in their relevant branches. Chapter One PDFs for Sewing, Cooking, and Programming are currently published.',
+      join:'Choose Join in the top navigation or Free Membership near the bottom of the page.',
+      shop:'Visit the Shop section for available learning files and product information.',
+      fallback:'I can help with the learning branches, Sewing, Cooking, Programming, Languages, learning files, and membership. Please make your question a little more specific.'
+    }
+  };
+  function updateLanguage() {
+    const t = copy[isEnglish() ? 'en' : 'fa'];
+    welcome.textContent = t.welcome;
+    first.textContent = t.first;
+    input.placeholder = t.placeholder;
+    document.getElementById('noventraAIFoot').textContent = t.foot;
+    launcher.setAttribute('aria-label', isEnglish() ? 'Open NOVENTRA AI' : 'باز کردن دستیار نوونترا');
+    close.setAttribute('aria-label', isEnglish() ? 'Close assistant' : 'بستن دستیار');
+    voice.setAttribute('aria-label', isEnglish() ? 'Speak to NOVENTRA AI' : 'صحبت با دستیار');
+  }
+  function openPanel() {
+    panel.hidden = false;
+    launcher.setAttribute('aria-expanded','true');
+    launcher.classList.add('is-open');
+    input.focus();
+  }
+  function closePanel() {
+    panel.hidden = true;
+    launcher.setAttribute('aria-expanded','false');
+    launcher.focus();
+    if (recognition) recognition.stop();
+  }
+  function addMessage(text, who, links) {
+    const bubble = document.createElement('div');
+    bubble.className = 'noventra-ai-message ' + who;
+    bubble.textContent = text;
+    if (links && links.length) {
+      const line = document.createElement('div');
+      line.style.marginTop = '7px';
+      links.forEach(item => {
+        const a = document.createElement('a');
+        a.href = item.href;
+        a.textContent = item.label;
+        line.appendChild(a);
+        line.appendChild(document.createTextNode('  ↗  '));
+      });
+      bubble.appendChild(line);
+    }
+    messages.appendChild(bubble);
+    messages.scrollTop = messages.scrollHeight;
+  }
+  function answerFor(message) {
+    const q = message.toLocaleLowerCase();
+    const t = copy[isEnglish() ? 'en' : 'fa'];
+    if (/شاخه|مسیر|چه آموزش|دوره ها|دوره‌ها|رشته|branches|learning paths|courses/.test(q)) return t.branches;
+    if (/خیاط|دوخت|الگو|sewing|tailor|pattern/.test(q)) return t.sewing;
+    if (/آشپز|غذا|آشپزی|cooking|kitchen|recipe/.test(q)) return t.cooking;
+    if (/برنامه.?نویس|کد|python|java|c\+\+|programming|coding/.test(q)) return t.programming;
+    if (/زبان|انگلیسی|مکالمه|languages|english|language/.test(q)) return t.languages;
+    if (/فایل|pdf|فصل|کتابخانه|دانلود|file|chapter|library|download/.test(q)) return t.files;
+    if (/عضو|ثبت.?نام|حساب|ورود|join|sign.?up|membership|account|login/.test(q)) return t.join;
+    if (/خرید|فروشگاه|پرداخت|قیمت|shop|buy|purchase|payment|price/.test(q)) return t.shop;
+    return t.fallback;
+  }
+  function speak(text) {
+    if (!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = isEnglish() ? 'en-US' : 'fa-IR';
+    utterance.rate = .96;
+    window.speechSynthesis.speak(utterance);
+  }
+  function respond(message) {
+    const clean = message.trim();
+    if (!clean) return;
+    addMessage(clean,'user');
+    const reply = answerFor(clean);
+    lastReply = reply;
+    window.setTimeout(() => addMessage(reply,'assistant'), 180);
+  }
+  launcher.addEventListener('click', () => panel.hidden ? openPanel() : closePanel());
+  close.addEventListener('click',closePanel);
+  form.addEventListener('submit',event => { event.preventDefault(); const value=input.value; input.value=''; respond(value); });
+  quick.addEventListener('click',event => {
+    const button=event.target.closest('button[data-ai-prompt]');
+    if (!button) return;
+    respond(button.getAttribute('data-ai-prompt'));
+  });
+  document.addEventListener('keydown',event => { if (event.key==='Escape' && !panel.hidden) closePanel(); });
+  if (voice) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SpeechRecognition) {
+      recognition = new SpeechRecognition();
+      recognition.interimResults = false;
+      recognition.continuous = false;
+      recognition.onstart = () => voice.classList.add('is-listening');
+      recognition.onend = () => voice.classList.remove('is-listening');
+      recognition.onerror = () => voice.classList.remove('is-listening');
+      recognition.onresult = event => {
+        const spoken = event.results[0][0].transcript;
+        input.value = spoken;
+        respond(spoken);
+      };
+      voice.addEventListener('click',() => {
+        recognition.lang = isEnglish() ? 'en-US' : 'fa-IR';
+        try { recognition.start(); } catch (_) {}
+      });
+    } else {
+      voice.addEventListener('click',() => addMessage(isEnglish() ? 'Voice input is not available in this browser. You can still type your message.' : 'ورودی صوتی در این مرورگر پشتیبانی نمی‌شود؛ می‌توانی پیام را تایپ کنی.','assistant'));
+    }
+  }
+  document.getElementById('languageToggle')?.addEventListener('click',() => window.setTimeout(updateLanguage,0));
+  updateLanguage();
+})();
