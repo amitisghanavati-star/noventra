@@ -361,7 +361,7 @@ if (slider) {
   function answerFor(message) {
     const q = message.toLocaleLowerCase()
       .replace(/[؟?!.,،؛:]/g, ' ')
-      .replace(/\\s+/g, ' ')
+      .replace(/\s+/g, ' ')
       .trim();
     const en = isEnglish();
     const t = copy[en ? 'en' : 'fa'];
@@ -385,6 +385,23 @@ if (slider) {
       return reply(
         'می‌توانم مسیرهای آموزشی نوونترا را معرفی کنم، محل فایل‌های منتشرشده را نشان بدهم و برای عضویت یا فروشگاه راهنمایی کنم. هنوز به هوش مصنوعی مولد متصل نیستم و برای پرسش‌های تخصصی باید به محتوای درس یا مدرس مراجعه کنی.',
         'I can introduce NOVENTRA’s learning paths, help locate published files, and guide you through membership and the shop. I am not yet connected to a generative AI model, so specialist questions should be checked against the lessons or with the instructor.'
+      );
+    }
+
+    // Müller is a patternmaking system, not a website library or a programming term.
+    // Handle it before broad sewing/library matches so the learner gets a relevant answer.
+    if (has('مولر','muller','müller')) {
+      if (has('کجا','از کجا','پیدا','بخش','where','find','section')) return reply(
+        'برای آشنایی با متد مولر، از بخش «روش‌های الگوسازی» در صفحهٔ اصلی نوونترا شروع کن: روی گزینهٔ «روش‌های الگوسازی» در منوی بالا بزن تا به بخش معرفی سیستم‌ها برسی. این بخش با کتابخانهٔ عمومی فایل‌ها فرق دارد.',
+        'To explore the Müller method, start with “Patternmaking Methods” on the NOVENTRA home page. Use that item in the top navigation to reach the section introducing the systems. It is different from the general Library.'
+      );
+      if (has('چیست','چیه','یعنی چه','توضیح','معرفی','what is','explain','meaning')) return reply(
+        'متد مولر (Müller) یکی از سیستم‌های الگوسازی لباس است. در این روش، الگو بر پایهٔ اندازه‌های بدن و قواعد مخصوص همان سیستم رسم و تنظیم می‌شود. برای یادگیری درست، باید مراحل و فرمول‌های خودِ متد مولر را جدا از متد متریک دنبال کنی؛ من نباید جزئیات درس NOVENTRA را حدس بزنم.',
+        'The Müller method is a clothing patternmaking system. Patterns are drafted and adjusted using body measurements and the rules specific to that system. Learn its steps and formulas separately from the Metric method; I should not guess the details of NOVENTRA’s lesson.'
+      );
+      return reply(
+        'متد مولر مربوط به الگوسازی لباس است. برای معرفی سیستم‌ها، بخش «روش‌های الگوسازی» در صفحهٔ اصلی نوونترا را باز کن. اگر منظورت یک مرحله یا فرمول مشخص از متد مولر است، نام همان مرحله را بپرس تا راهنمایی‌ات کنم؛ اگر هنوز در درس‌های منتشرشده نیست، صریح می‌گویم.',
+        'Müller is a clothing patternmaking system. Open “Patternmaking Methods” on the NOVENTRA home page for an introduction. If you mean a particular step or formula, ask about that step and I’ll guide you; if it is not covered in the published lessons yet, I’ll say so.'
       );
     }
 
