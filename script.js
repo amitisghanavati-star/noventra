@@ -359,17 +359,33 @@ if (slider) {
     messages.scrollTop = messages.scrollHeight;
   }
   function answerFor(message) {
-    const q = message.toLocaleLowerCase();
+    const q = message.toLocaleLowerCase().replace(/[؟?!.,،؛:]/g, ' ').replace(/\\s+/g, ' ').trim();
     const t = copy[isEnglish() ? 'en' : 'fa'];
-    if (/شاخه|مسیر|چه آموزش|دوره ها|دوره‌ها|رشته|branches|learning paths|courses/.test(q)) return t.branches;
-    if (/خیاط|دوخت|الگو|sewing|tailor|pattern/.test(q)) return t.sewing;
-    if (/آشپز|غذا|آشپزی|cooking|kitchen|recipe/.test(q)) return t.cooking;
-    if (/برنامه.?نویس|کد|python|java|c\+\+|programming|coding/.test(q)) return t.programming;
-    if (/زبان|انگلیسی|مکالمه|languages|english|language/.test(q)) return t.languages;
-    if (/فایل|pdf|فصل|کتابخانه|دانلود|file|chapter|library|download/.test(q)) return t.files;
-    if (/عضو|ثبت.?نام|حساب|ورود|join|sign.?up|membership|account|login/.test(q)) return t.join;
-    if (/خرید|فروشگاه|پرداخت|قیمت|shop|buy|purchase|payment|price/.test(q)) return t.shop;
-    return t.fallback;
+    const has = (...terms) => terms.some(term => q.includes(term));
+    // Handle greetings and capability questions before broad topic matches.
+    if (has('سلام','درود','hello','hi ','hey')) return isEnglish()
+      ? 'Hello! I’m NOVENTRA’s learning guide. Ask me where to find a course, what each learning path covers, or how to use the learning files.'
+      : 'سلام! خوش آمدی. من راهنمای مسیرهای آموزشی نوونترا هستم. می‌توانی دربارهٔ دوره‌ها، فایل‌ها و بخش‌های سایت از من بپرسی.';
+    if (has('چه کار','چیکار','چه کمکی','کمک می','قابلیت','can you','what can you')) return isEnglish()
+      ? 'I can currently guide you around the NOVENTRA website: its four learning paths, published chapter files, membership area, and shop. I do not yet teach lessons or answer open-ended questions like a full AI tutor.'
+      : 'فعلاً می‌توانم در پیدا کردن مسیرهای آموزشی، فصل‌های منتشرشده، عضویت و فروشگاه نوونترا راهنمایی‌ات کنم. هنوز به یک مدل هوش مصنوعی کامل متصل نیستم و جای مدرس دوره را نمی‌گیرم.';
+    if (has('شاخه','مسیر','چه آموزش','چه دوره','دوره ها','دوره‌ها','رشته','branches','learning paths','courses')) return t.branches;
+    if (has('خیاط','دوخت','الگو','اندازه گیری','اندازه‌گیری','متریک','مولر','sewing','tailor','pattern','muller','metric')) return t.sewing;
+    if (has('آشپز','غذا','آشپزی','دستور پخت','دستورپخت','kitchen','cooking','recipe','food')) return t.cooking;
+    if (has('برنامه نویس','برنامه‌نویس','کدنویسی','کد','پایتون','جاوا','سی پلاس','سی‌پلاس','python','java','c++','programming','coding')) return t.programming;
+    if (has('زبان انسانی','زبان انگلیسی','زبان فرانسه','زبان آلمانی','مکالمه','گرامر','واژگان','languages','english','french','german','conversation','grammar')) return t.languages;
+    if (has('زبان','language')) return isEnglish()
+      ? 'Do you mean a human language (such as English), or a programming language (such as Python)? Human languages belong to NOVENTRA Languages; coding belongs to NOVENTRA Programming.'
+      : 'منظورت زبان انسانی مثل انگلیسی است یا زبان برنامه‌نویسی مثل پایتون؟ زبان‌های انسانی در NOVENTRA Languages و زبان‌های برنامه‌نویسی در شاخهٔ Programming قرار می‌گیرند.';
+    if (has('فایل','pdf','فصل','کتابخانه','دانلود','file','chapter','library','download')) return t.files;
+    if (has('عضو','ثبت نام','ثبت‌نام','حساب','ورود','عضویت','join','sign up','membership','account','login')) return t.join;
+    if (has('خرید','فروشگاه','پرداخت','قیمت','shop','buy','purchase','payment','price')) return t.shop;
+    if (has('ربات','دستیار','هوش مصنوعی','هوشمند','ai assistant','chatbot','artificial intelligence')) return isEnglish()
+      ? 'NOVENTRA AI is the website guide. It can point learners to the right section, but it is still an early prototype and is not connected to a generative AI service yet.'
+      : 'NOVENTRA AI راهنمای سایت است. فعلاً می‌تواند هنرجو را به بخش مناسب هدایت کند؛ اما هنوز نسخهٔ آزمایشی است و به سرویس هوش مصنوعی مولد وصل نشده است.';
+    return isEnglish()
+      ? 'I’m not certain what you mean yet. Are you asking about a NOVENTRA course, a chapter PDF, membership, or the shop? Tell me the topic and I’ll point you to the right place.'
+      : 'هنوز دقیق متوجه منظورت نشدم. سؤالت دربارهٔ کدام موضوع است: دوره‌های نوونترا، فایل فصل‌ها، عضویت یا فروشگاه؟ موضوع را مشخص کن تا راهنمایی‌ات کنم.';
   }
   function speak(text) {
     if (!('speechSynthesis' in window)) return;
