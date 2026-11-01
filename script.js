@@ -391,9 +391,13 @@ if (slider) {
     // Müller is a patternmaking system, not a website library or a programming term.
     // Handle it before broad sewing/library matches so the learner gets a relevant answer.
     if (has('مولر','muller','müller')) {
+      if (has('کتابخانه','library')) return reply(
+        'متد مولر را در کتابخانهٔ عمومی سایت جست‌وجو نکن؛ آن بخش فعلاً آرشیو عمومی منابع است. برای معرفی سیستم‌های الگوسازی، از منوی بالای سایت روی «روش‌های الگوسازی» بزن. اگر دنبال جزوه یا درس کامل مولر هستی، هنوز باید محتوای آن درس به کتابخانه اضافه شود.',
+        'Do not look for the Müller method in the general Library; that area is currently a general resource archive. Use “Patternmaking Methods” in the top menu for the introduction to pattern systems. A full Müller lesson or handout must be added to the Library first.'
+      );
       if (has('کجا','از کجا','پیدا','بخش','where','find','section')) return reply(
-        'برای آشنایی با متد مولر، از بخش «روش‌های الگوسازی» در صفحهٔ اصلی نوونترا شروع کن: روی گزینهٔ «روش‌های الگوسازی» در منوی بالا بزن تا به بخش معرفی سیستم‌ها برسی. این بخش با کتابخانهٔ عمومی فایل‌ها فرق دارد.',
-        'To explore the Müller method, start with “Patternmaking Methods” on the NOVENTRA home page. Use that item in the top navigation to reach the section introducing the systems. It is different from the general Library.'
+        'برای معرفی متد مولر، از منوی بالای سایت وارد «روش‌های الگوسازی» شو. کتابخانهٔ عمومی سایت فعلاً درس کامل مولر را در اختیار ندارد.',
+        'For an introduction to Müller, open “Patternmaking Methods” from the top menu. The general Library does not currently contain a full Müller lesson.'
       );
       if (has('چیست','چیه','یعنی چه','توضیح','معرفی','what is','explain','meaning')) return reply(
         'متد مولر (Müller) یکی از سیستم‌های الگوسازی لباس است. در این روش، الگو بر پایهٔ اندازه‌های بدن و قواعد مخصوص همان سیستم رسم و تنظیم می‌شود. برای یادگیری درست، باید مراحل و فرمول‌های خودِ متد مولر را جدا از متد متریک دنبال کنی؛ من نباید جزئیات درس NOVENTRA را حدس بزنم.',
