@@ -359,7 +359,7 @@ if (slider) {
     messages.scrollTop = messages.scrollHeight;
   }
   function answerFor(message) {
-    const q = message.toLocaleLowerCase().replace(/[؟?!.,،؛:]/g, ' ').replace(/\\s+/g, ' ').trim();
+    const q = message.toLocaleLowerCase().replace(/[؟?!.,،؛:]/g, ' ').replace(/\s+/g, ' ').trim();
     const t = copy[isEnglish() ? 'en' : 'fa'];
     const has = (...terms) => terms.some(term => q.includes(term));
     // Handle greetings and capability questions before broad topic matches.
