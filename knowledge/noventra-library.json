@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "title": "NOVENTRA Learning Library",
+  "lastReviewed": "2026-11-01",
+  "policy": {
+    "fa": "فقط اطلاعاتی را قطعی اعلام کن که در این فهرست ثبت شده‌اند. اگر محتوای کامل یک PDF در این فهرست خلاصه نشده، درباره جزئیات درس حدس نزن و هنرجو را به فایل اصلی یا مدرس ارجاع بده. وضعیت منتشرنشده را منتشرشده معرفی نکن.",
+    "en": "Only state facts recorded in this catalog. If a PDF's full contents are not summarized here, do not guess lesson details; direct learners to the original file or instructor. Never describe unpublished material as published."
+  },
+  "branches": [
+    {
+      "id": "sewing",
+      "name": "NOVENTRA Sewing",
+      "name_fa": "خیاطی",
+      "description_fa": "آموزش خیاطی با تأکید بر فهم دلیل اندازه‌ها، خطوط الگو و مراحل دوخت.",
+      "description_en": "Sewing education focused on understanding measurements, pattern lines, and construction steps.",
+      "published": [
+        {
+          "chapter": 1,
+          "title_fa": "فصل اول آموزش خیاطی",
+          "title_en": "Sewing — Chapter One",
+          "summary_fa": "فصل آغازین و مبانی شناخت ابزار خیاطی.",
+          "summary_en": "The introductory chapter and fundamentals of sewing tools.",
+          "file": "NAVENTRA Sewing.pdf",
+          "url": "NAVENTRA%20Sewing.pdf"
+        }
+      ],
+      "notYetPublished": [
+        "فصل‌های بعدی و درس‌های تخصصی الگوسازی، از جمله آموزش کامل متد مولر"
+      ]
+    },
+    {
+      "id": "kitchen",
+      "name": "NOVENTRA Kitchen",
+      "name_fa": "آشپزی",
+      "description_fa": "آموزش آشپزی با توجه به شناخت مواد اولیه، تکنیک‌ها و دلیل هر مرحله.",
+      "description_en": "Cooking education focused on ingredients, techniques, and the reasoning behind each step.",
+      "published": [
+        {
+          "chapter": 1,
+          "title_fa": "فصل اول آموزش آشپزی",
+          "title_en": "Cooking — Chapter One",
+          "summary_fa": "فایل فصل اول آشپزی منتشر شده و از بخش NOVENTRA Kitchen قابل دسترسی است.",
+          "summary_en": "The first cooking chapter PDF is published and available in the NOVENTRA Kitchen section.",
+          "file": "cooking/NOVENTRAcooking.pdf",
+          "url": "cooking/NOVENTRAcooking.pdf"
+        }
+      ],
+      "notYetPublished": [
+        "فصل دوم آشپزی هنوز منتشر نشده است."
+      ]
+    },
+    {
+      "id": "programming",
+      "name": "NOVENTRA Programming",
+      "name_fa": "برنامه‌نویسی",
+      "description_fa": "آموزش مبانی برنامه‌نویسی و زبان‌های برنامه‌نویسی؛ مسیر توسعه می‌تواند موضوعات گسترده‌تر علوم کامپیوتر را نیز پوشش دهد.",
+      "description_en": "Programming fundamentals and programming languages, with room to expand into broader computer-science subjects.",
+      "published": [
+        {
+          "chapter": 1,
+          "title_fa": "فصل اول برنامه‌نویسی",
+          "title_en": "Programming — Chapter One",
+          "summary_fa": "فصل مقدماتی درباره مفاهیم پایه و آشنایی با برنامه‌نویسی.",
+          "summary_en": "An introductory chapter covering foundational programming concepts.",
+          "file": "programming/NOVENTRAprogramming.pdf",
+          "url": "programming/NOVENTRAprogramming.pdf"
+        }
+      ],
+      "notYetPublished": []
+    },
+    {
+      "id": "languages",
+      "name": "NOVENTRA Languages",
+      "name_fa": "زبان‌های انسانی",
+      "description_fa": "مسیر یادگیری زبان‌های انسانی شامل واژگان، دستور زبان، مکالمه، شنیدار، خواندن و نوشتن.",
+      "description_en": "Human-language learning covering vocabulary, grammar, conversation, listening, reading, and writing.",
+      "published": [],
+      "notYetPublished": [
+        "هنوز فایل فصل آموزشی منتشرشده‌ای برای این شاخه در فهرست سایت ثبت نشده است."
+      ]
+    }
+  ],
+  "patternmakingMethods": {
+    "listedOnSite": [
+      "متریک",
+      "مولر (Müller)",
+      "ایتالیایی",
+      "فرانسوی",
+      "بوردا و الگوهای تجاری",
+      "دراپینگ و مولاژ"
+    ],
+    "note_fa": "این نام‌ها در بخش روش‌های الگوسازی سایت معرفی شده‌اند؛ وجود نام یک روش به معنی انتشار درس کامل آن نیست.",
+    "note_en": "These methods are listed on the website; listing a method does not mean its full lesson has been published."
+  }
+}
