@@ -430,7 +430,7 @@ if (slider) {
 
     // Specific branch questions and useful follow-up directions.
     // Check Chapter Two explicitly before the broad cooking-file response.
-    if (has('آشپز','غذا','آشپزی','kitchen','cooking') &&
+    if (has('آشپز','اشپز','آشپزی','اشپزی','غذا','kitchen','cooking') &&
         has('فصل','chapter') &&
         has('دوم','۲','2','second','two')) {
       const kitchen = libraryCatalog?.branches?.find(branch => branch.id === 'kitchen');
