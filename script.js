@@ -429,6 +429,24 @@ if (slider) {
     }
 
     // Specific branch questions and useful follow-up directions.
+    // Check Chapter Two explicitly before the broad cooking-file response.
+    if (has('آشپز','غذا','آشپزی','kitchen','cooking') &&
+        has('فصل','chapter') &&
+        has('دوم','۲','2','second','two')) {
+      const kitchen = libraryCatalog?.branches?.find(branch => branch.id === 'kitchen');
+      const chapterTwo = kitchen?.published?.find(item => item.chapter === 2);
+      if (chapterTwo) {
+        const href = chapterTwo.url || chapterTwo.file;
+        return reply(
+          'فصل دوم آشپزی منتشر شده است. برای مطالعه، وارد NOVENTRA Kitchen شو و فایل فصل دوم را باز کن: ' + href,
+          'Cooking Chapter Two is published. Open NOVENTRA Kitchen and select the Chapter Two file: ' + href
+        );
+      }
+      return reply(
+        'فصل دوم آشپزی هنوز در سایت منتشر نشده است. در حال حاضر فقط فصل اول منتشر شده؛ برای مطالعه آن وارد بخش NOVENTRA Kitchen شو و گزینه «مطالعه فصل اول» را انتخاب کن. به‌محض انتشار فصل دوم، وضعیت این راهنما هم به‌روزرسانی می‌شود.',
+        'Cooking Chapter Two has not been published on the website yet. Only Chapter One is currently available. Visit NOVENTRA Kitchen and choose “Read Chapter One”. This guide will be updated when Chapter Two is published.'
+      );
+    }
     if (has('آشپز','غذا','آشپزی','دستور پخت','دستورپخت','kitchen','cooking','recipe','food')) {
       if (has('فصل','pdf','فایل','دانلود','chapter','file','download')) return reply(
         'برای دریافت محتوای آشپزی، به بخش NOVENTRA Kitchen در صفحه برو و لینک «مطالعه فصل اول آشپزی» را باز کن. فصل اول منتشر شده است؛ فصل دوم در برنامهٔ آموزشی بعدی قرار دارد.',
