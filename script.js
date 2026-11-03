@@ -8,6 +8,29 @@ const translations = {
   '.hero-buttons .btn': ['Learning path <span>↙</span>'],
   '.hero-buttons .text-link': ['The NOVENTRA story <span>←</span>'],
   '.hero-note': ['Start with the basics; grow your skills step by step.'],
+  '.worlds-heading .section-kicker': ['FOUR LEARNING PATHS / ONE VISION'],
+  '.worlds-heading h2': ['Four paths for <em>learning and creating.</em>'],
+  '.worlds-heading p': ['NOVENTRA brings different skills together through one philosophy: understand, practice, and create.'],
+  '.world-card .world-index': ['01 / SEWING','02 / KITCHEN','03 / PROGRAMMING','04 / LANGUAGES'],
+  '.world-card h3': ['NOVENTRA Sewing','NOVENTRA Kitchen','NOVENTRA Programming','NOVENTRA Languages'],
+  '.world-card p': [
+    'From tools and measurements to patternmaking, cutting, and professional sewing — understand the logic behind every line.',
+    'Cooking as both art and knowledge: precise recipes, ingredient awareness, and techniques for memorable flavors.',
+    'From algorithms and C to programming languages — build logical thinking, problem-solving, and practical code.',
+    'Human-language learning, from vocabulary and grammar to speaking, listening, reading, and writing.'
+  ],
+  '.world-card .world-link': ['Explore Sewing <b>↙</b>','Explore Cooking <b>↙</b>','Explore Programming <b>↙</b>','Explore Languages <b>↙</b>'],
+  '.branch-detail-section .section-kicker': ['NOVENTRA KITCHEN','NOVENTRA PROGRAMMING','NOVENTRA LANGUAGES'],
+  '.branch-detail-section h2': [
+    'The knowledge of cooking; <em>the art of flavor.</em>',
+    'From logic to code; <em>from idea to creation.</em>',
+    'A new language; <em>a new way to see the world.</em>'
+  ],
+  '.branch-detail-section p': [
+    'Recipes are more than lists of ingredients: learn why each step matters, how flavors work, and how to use the right technique.',
+    'The Programming path begins with algorithmic foundations and C, then gradually moves toward more advanced concepts and languages.',
+    'Human languages for life, study, and work, with structured paths in vocabulary, grammar, conversation, listening, reading, and writing. Programming languages are taught separately.'
+  ],
   '.hero-bottomline span': ['01 — LEARN THE CRAFT','SCROLL TO EXPLORE ↓'],
   '.fashion-slider-heading .eyebrow': ['NOVENTRA / FASHION STUDIO'],
   '.fashion-slider-heading h2': ['A world of fashion, <em>without limits</em>'],
@@ -36,12 +59,12 @@ const translations = {
   '.archive-list a small': ['Tools, measurements, patterns, cutting, and sewing','Persian and English sewing terminology','Step-by-step exercises and checklists'],
   '.archive-note': ['Educational content will be added progressively.'],
   '.branch-programming .branch-status': ['Read Chapter One — Programming (PDF) ↗'],
-  '.branch-kitchen .branch-status': ['Read Chapter One — Cooking (PDF) ↗'],
+  '#kitchen .branch-status': ['Open the NOVENTRA Kitchen collection ↗'],
   '.shop-section .section-kicker': ['THE DIGITAL ATELIER / 04'],
   '.shop-heading h2': ['Tools for<br><em>your journey.</em>'],
-  '.shop-heading > p': ['Digital files, notes, and practical resources. Online sales will launch when the products and payment process are ready.'],
-  '.shop-item-meta h3': ['Sewing starter guide','Measurement worksheets','Professional seam finishing'],
-  '.shop-item-meta p': ['Digital learning product','Practice and measurement records','Finishing techniques'],
+  '.shop-heading > p': ['NOVENTRA digital learning files are currently offered through the manual bank-transfer process described with each product.'],
+  '.shop-item-meta h3': ['NOVENTRA Sewing — Chapter One','Chapter Two: Fabric, Fibers & Fabric Properties','Chapter Three: Basic Hand and Machine Sewing','Measurement worksheets','Professional seam-finishing guide'],
+  '.shop-item-meta p': ['Free educational PDF','PDF · Access after payment confirmation','PDF · Access after payment confirmation','Practice and measurement records','Finishing techniques'],
   '.shop-item-meta > span': ['Coming soon','Coming soon','Coming soon'],
   '.about-copy .section-kicker': ['A NOTE ABOUT NOVENTRA'],
   '.about-copy h2': ['Do more than draw a pattern;<br><em>understand every line.</em>'],
@@ -285,6 +308,7 @@ if (slider) {
   let recognition = null;
   let lastReply = '';
   let libraryCatalog = null;
+  let siteAuthorContext = false;
   fetch('knowledge/noventra-library.json')
     .then(response => { if (!response.ok) throw new Error('Library catalog unavailable'); return response.json(); })
     .then(data => { libraryCatalog = data; })
@@ -373,6 +397,16 @@ if (slider) {
     const has = (...terms) => terms.some(term => q.includes(term));
     const reply = (fa, english) => en ? english : fa;
 
+    // Conversational self-identification only; never use this as account authentication.
+    if (has('من خود مدرس','من مدرس و نویسنده','من نویسنده','من مدرس','من سازنده سایت','من صاحب سایت',
+            'i am the instructor','i am the teacher','i am the author','i am the site owner','i created this site')) {
+      siteAuthorContext = true;
+      return reply(
+        'متوجه شدم. در این گفت‌وگو تو را مدرس و نویسندهٔ نوونترا در نظر می‌گیرم. این شناخت فقط برای ادامهٔ همین مکالمه است و به معنی دسترسی مدیریتی یا تأیید هویت حساب نیست.',
+        'Understood. I’ll treat you as NOVENTRA’s instructor and author in this conversation. This is conversational context only; it does not authenticate an account or grant administrative access.'
+      );
+    }
+
     // Respond to the learner's actual intent before classifying the subject.
     // Answer catalog questions from the published, versioned NOVENTRA knowledge file.
     if (libraryCatalog && has('چه شاخه','چه دوره','چه فصل','کدام فصل','چه فایل','فایل های منتشر','فایل‌های منتشر','منتشر شده','منتشرشده','what courses','which courses','published files','available chapters')) {
@@ -409,6 +443,12 @@ if (slider) {
 
     // Answer instructor/teacher questions directly. Never invent a person's name:
     // the published site content currently does not identify course instructors.
+    if (siteAuthorContext && has('اسم مدرس','نام مدرس','مدرس کیه','اسم استاد','نام استاد','who is the teacher','instructor name','teacher name')) {
+      return reply(
+        'در همین گفت‌وگو گفتی خودت مدرس و نویسندهٔ نوونترا هستی؛ پس متوجه‌ام که منظورت خودت هستی. نامی را بدون تأیید تو به معرفی عمومی سایت اضافه نمی‌کنم.',
+        'You told me in this conversation that you are NOVENTRA’s instructor and author, so I understand you mean yourself. I will not add a public name to the website without your confirmation.'
+      );
+    }
     if (has('اسم مدرس','نام مدرس','مدرس کیه','مدرس چیه','مدرس چه کسی','اسم استاد','نام استاد','استاد کیه','معلم کیه','مربی کیه','مدرس دوره','مدرس این دوره','چه کسی تدریس','who is the teacher','who teaches','instructor name','course instructor','teacher name','who is teaching')) {
       return reply(
         'در محتوای منتشرشدهٔ فعلی نوونترا، نام مدرس این دوره ثبت نشده است؛ بنابراین نمی‌خواهم نامی را حدس بزنم. برای اعلام نام دقیق، باید اطلاعات مدرس در صفحهٔ همان دوره یا معرفی رسمی آن اضافه شود.',
