@@ -407,6 +407,15 @@ if (slider) {
       );
     }
 
+    // Answer instructor/teacher questions directly. Never invent a person's name:
+    // the published site content currently does not identify course instructors.
+    if (has('اسم مدرس','نام مدرس','مدرس کیه','مدرس چیه','مدرس چه کسی','اسم استاد','نام استاد','استاد کیه','معلم کیه','مربی کیه','مدرس دوره','مدرس این دوره','چه کسی تدریس','who is the teacher','who teaches','instructor name','course instructor','teacher name','who is teaching')) {
+      return reply(
+        'در محتوای منتشرشدهٔ فعلی نوونترا، نام مدرس این دوره ثبت نشده است؛ بنابراین نمی‌خواهم نامی را حدس بزنم. برای اعلام نام دقیق، باید اطلاعات مدرس در صفحهٔ همان دوره یا معرفی رسمی آن اضافه شود.',
+        'The currently published NOVENTRA content does not list this course’s instructor, so I won’t guess a name. The instructor’s name needs to be added to the course page or its official description.'
+      );
+    }
+
     // Müller is a patternmaking system, not a website library or a programming term.
     // Handle it before broad sewing/library matches so the learner gets a relevant answer.
     if (has('مولر','muller','müller')) {
