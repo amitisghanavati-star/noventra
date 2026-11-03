@@ -402,8 +402,8 @@ if (slider) {
             'i am the instructor','i am the teacher','i am the author','i am the site owner','i created this site')) {
       siteAuthorContext = true;
       return reply(
-        'متوجه شدم. در این گفت‌وگو تو را مدرس و نویسندهٔ نوونترا در نظر می‌گیرم. این شناخت فقط برای ادامهٔ همین مکالمه است و به معنی دسترسی مدیریتی یا تأیید هویت حساب نیست.',
-        'Understood. I’ll treat you as NOVENTRA’s instructor and author in this conversation. This is conversational context only; it does not authenticate an account or grant administrative access.'
+        'چه عالی! خوشحالم با مدرس و نویسندهٔ نوونترا هم‌صحبتم. 🌷 اینجا خانه‌ای است که با دانش و خلاقیت ساخته‌ای. بگو امروز چطور می‌توانم در پیشبرد نوونترا کمکت کنم؟',
+        'That’s wonderful! I’m glad to be speaking with NOVENTRA’s instructor and author. 🌷 This is the learning community you’ve built with your knowledge and creativity. How can I help you move NOVENTRA forward today?'
       );
     }
 
