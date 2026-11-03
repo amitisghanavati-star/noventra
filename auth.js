@@ -30,7 +30,7 @@ document.querySelectorAll('[data-open-auth]').forEach(el=>el.addEventListener('c
 document.querySelectorAll('[data-close-auth]').forEach(el=>el.addEventListener('click',()=>dialog?.close()));
 dialog?.addEventListener('click',e=>{if(e.target===dialog) dialog.close();});
 document.querySelectorAll('[data-auth-mode]').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.authMode)));
-if (!configReady) message('فرم آماده است؛ برای فعال‌شدن حساب واقعی، تنظیمات Firebase را طبق راهنمای داخل ZIP تکمیل کن.');
+if (!configReady) message('تنظیمات Firebase هنوز تکمیل نشده است؛ ثبت‌نام و ورود واقعی تا واردکردن تنظیمات برنامهٔ وب Firebase فعال نیست.');
 if (auth) onAuthStateChanged(auth,user=>{
   const existing=document.getElementById('memberStatus');
   if(existing) existing.remove();
