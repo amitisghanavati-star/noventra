@@ -40,6 +40,7 @@
     <a href="#programming">برنامه‌نویسی</a>
     <a href="#languages">زبان‌های انسانی</a>
     <a href="#library">کتابخانه</a>
+    <a href="#questions">پرسش و پاسخ</a>
     <a href="#about">درباره نوونترا</a>
     <a class="nav-cta" href="#join" data-open-auth>عضویت</a>
   </nav>
@@ -212,6 +213,31 @@
   <section class="branch-detail-section branch-programming" id="programming"><div class="branch-detail-mark">&lt;/&gt;</div><div><div class="section-kicker">NOVENTRA PROGRAMMING</div><h2>از منطق تا کد؛ <em>از ایده تا ساختن.</em></h2><p>مسیر برنامه‌نویسی با مبانی الگوریتم و زبان C آغاز می‌شود و قدم‌به‌قدم به مفاهیم و زبان‌های پیشرفته‌تر می‌رسد.</p><a class="branch-status" href="programming/NOVENTRAprogramming.pdf" target="_blank" rel="noopener">مطالعه فصل اول برنامه‌نویسی (PDF) ↗</a></div></section>
   <section class="branch-detail-section branch-languages" id="languages"><div class="branch-detail-mark">文 / A</div><div><div class="section-kicker">NOVENTRA LANGUAGES</div><h2>زبان تازه؛ <em>راهی به جهان‌های تازه.</em></h2><p>آموزش زبان‌های انسانی برای زندگی، تحصیل و کار؛ با مسیرهای سطح‌بندی‌شده در واژگان، دستور زبان، مکالمه، شنیدار، خواندن و نوشتن. زبان‌های برنامه‌نویسی در شاخه مستقل Programming آموزش داده می‌شوند.</p><span class="branch-status">شاخه جدید نوونترا — محتوای آموزشی در حال برنامه‌ریزی</span></div></section>
   <section class="about-section" id="about"><div class="about-symbol">N<span>✳</span></div><div class="about-copy"><div class="section-kicker">A NOTE ABOUT NOVENTRA</div><h2>فقط الگو نکش؛<br><em>دلیل هر خط را بفهم.</em></h2><p>نوونترا با این باور ساخته می‌شود که آموزش خوب فقط نشان نمی‌دهد «چه کار کنیم»؛ توضیح می‌دهد «چرا این کار را انجام می‌دهیم». هدف ما ساختن مرجعی روشن، دقیق و خلاق برای یادگیری خیاطی، آشپزی، برنامه‌نویسی و زبان‌های انسانی است.</p><a class="text-link" href="#join">همراه شو <span>←</span></a></div></section>
+  <section class="qna-section" id="questions" aria-labelledby="qnaTitle">
+    <div class="qna-heading">
+      <div class="section-kicker">NOVENTRA / STUDENT SUPPORT</div>
+      <h2 id="qnaTitle">پرسش کن؛ <em>با هم یاد می‌گیریم.</em></h2>
+      <p>اگر در یکی از درس‌ها پرسشی داری، اینجا مطرح کن تا پاسخ آن در کنار پرسشت ثبت شود.</p>
+    </div>
+    <div id="questionsSignedOut" class="qna-signin-note">برای ثبت و مشاهده پرسش‌ها، ابتدا از بخش عضویت وارد حساب خودت شو.</div>
+    <div id="questionFormWrap" class="qna-form-wrap" hidden>
+      <form id="questionForm" class="qna-form">
+        <label>شاخه آموزشی
+          <select name="category" required>
+            <option value="خیاطی">خیاطی</option><option value="آشپزی">آشپزی</option>
+            <option value="برنامه‌نویسی">برنامه‌نویسی</option><option value="زبان">زبان</option>
+            <option value="عمومی">عمومی</option>
+          </select>
+        </label>
+        <label>عنوان پرسش<input name="title" required minlength="3" maxlength="150" placeholder="موضوع پرسشت را کوتاه بنویس"></label>
+        <label>متن پرسش<textarea name="body" required minlength="5" maxlength="5000" rows="5" placeholder="سؤالت را با جزئیات بنویس…"></textarea></label>
+        <button class="btn btn-light" type="submit">ثبت پرسش <span>↙</span></button>
+        <p id="questionStatus" class="qna-status" role="status" aria-live="polite"></p>
+      </form>
+      <p id="adminUidNotice" class="qna-admin-note" hidden></p>
+    </div>
+    <div id="questionsList" class="qna-list"><p class="qna-empty">برای دیدن پرسش‌ها، وارد حساب شو.</p></div>
+  </section>
   <section class="join-section" id="join"><div><div class="section-kicker">THE NEXT STITCH / 05</div><h2>هر حرفه‌ای،<br>یک‌بار <em>از ابتدا</em> شروع کرده.</h2><p>این نسخه آغاز مسیر نوونتراست. با تکمیل درس‌ها، فایل‌ها و راهنماها، این فضا به کتابخانه‌ای آموزشی تبدیل می‌شود.</p></div><button class="btn btn-light" type="button" data-open-auth>عضویت رایگان <span>↙</span></button></section>
 <div class="pdf-link-wrap">
 <a href="NAVENTRA%20Sewing.pdf" target="_blank" rel="noopener">
@@ -296,4 +322,5 @@
 <footer class="site-footer"><a class="logo footer-logo" href="#home"><span class="logo-symbol">N<span>✳</span></span><span class="logo-type">NOVENTRA<small>THE ART OF MAKING</small></span></a><p>ساختن، با دانش و خلاقیت.</p><span>© 2026 NOVENTRA</span></footer>
 <script src="script.js?v=20261103-site-audit-1"></script>
 <script type="module" src="auth.js?v=20261105-firebase-2"></script>
+<script type="module" src="qna.js?v=20261105-qna-1"></script>
 </body></html>
