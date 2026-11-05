@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { firebaseConfig } from "./firebase-config.js";
+import { firebaseConfig } from "./firebase-config.js?v=20261105-firebase-2";
 
 const dialog = document.getElementById('authDialog');
 const form = document.getElementById('authForm');
@@ -40,7 +40,7 @@ if (auth) onAuthStateChanged(auth,user=>{
 });
 form?.addEventListener('submit',async e=>{
  e.preventDefault();
- if(!auth){message('حساب‌سازی هنوز فعال نشده است. ابتدا Firebase را طبق راهنما تنظیم کن.',true);return;}
+ if(!auth){ const detail = firebaseInitError?.code ? ` (${firebaseInitError.code})` : ''; message(`اتصال Firebase برقرار نشد${detail}. لطفاً چند لحظه بعد دوباره امتحان کن.`,true);return;}
  const email=emailInput.value.trim(); const password=passwordInput.value;
  if(mode==='signup' && password!==confirmInput.value){message('رمز عبور و تکرار آن یکسان نیستند.',true);return;}
  submit.disabled=true; submit.textContent='لطفاً صبر کن…';
