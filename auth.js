@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { firebaseConfig } from "./firebase-config.js";
 
 const dialog = document.getElementById('authDialog');
@@ -11,6 +11,7 @@ const passwordInput = document.getElementById('authPassword');
 const confirmInput = document.getElementById('authConfirm');
 const confirmLabel = document.getElementById('authConfirmLabel');
 const submit = document.getElementById('authSubmit');
+const googleButton = document.getElementById('googleSignIn');
 let mode = 'signup';
 let auth = null;
 const configReady = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes('PASTE_') && firebaseConfig.projectId && !firebaseConfig.projectId.includes('PASTE_') && firebaseConfig.appId && !firebaseConfig.appId.includes('PASTE_');
@@ -53,4 +54,28 @@ form?.addEventListener('submit',async e=>{
   const messages={ 'auth/email-already-in-use':'این ایمیل قبلاً ثبت شده است. از بخش ورود استفاده کن.','auth/invalid-email':'فرمت ایمیل درست نیست.','auth/weak-password':'رمز عبور باید حداقل ۶ نویسه باشد.','auth/invalid-credential':'ایمیل یا رمز عبور درست نیست.','auth/network-request-failed':'اتصال اینترنت را بررسی کن.'};
   message(messages[err.code] || 'ثبت‌نام/ورود انجام نشد. تنظیمات Firebase و روش ورود ایمیلی را بررسی کن.',true);
  } finally { submit.disabled=false; submit.textContent=mode==='signup'?'ایجاد حساب رایگان':'ورود به حساب'; }
+});
+
+googleButton?.addEventListener('click', async () => {
+  if (!auth) { message('تنظیمات Firebase هنوز آماده نیست.', true); return; }
+  googleButton.disabled = true;
+  googleButton.textContent = 'در حال اتصال به گوگل…';
+  try {
+    const provider = new GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    await signInWithPopup(auth, provider);
+    message('ورود با حساب گوگل با موفقیت انجام شد. خوش آمدی!');
+    setTimeout(() => dialog?.close(), 1400);
+  } catch (err) {
+    const messages = {
+      'auth/popup-closed-by-user': 'پنجره ورود گوگل بسته شد؛ دوباره تلاش کن.',
+      'auth/popup-blocked': 'مرورگر پنجره ورود را مسدود کرد؛ اجازه بازشدن پنجره را بده.',
+      'auth/unauthorized-domain': 'دامنه سایت هنوز در Firebase مجاز نشده است.',
+      'auth/account-exists-with-different-credential': 'برای این ایمیل قبلاً روش ورود دیگری ثبت شده است.'
+    };
+    message(messages[err.code] || 'ورود با گوگل انجام نشد. تنظیمات Google و دامنه مجاز را بررسی کن.', true);
+  } finally {
+    googleButton.disabled = false;
+    googleButton.textContent = 'ورود با حساب Google';
+  }
 });
