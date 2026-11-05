@@ -4,7 +4,7 @@ import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTim
 import { firebaseConfig } from "./firebase-config.js?v=20261105-firestore-1";
 
 // Replace this value with the site owner's Firebase Authentication UID before enabling admin replies.
-const ADMIN_UID = "REPLACE_WITH_OWNER_FIREBASE_UID";
+const ADMIN_UID = "LOJRpQAZYoZ9xCmXq8KpeQHXIuA3";
 
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -48,12 +48,8 @@ onAuthStateChanged(auth, user => {
   currentUser = user;
   signedOutEl.hidden = Boolean(user);
   formWrap.hidden = !user;
-  if (user) {
-    adminNotice.hidden = false;
-    adminNotice.textContent = "شناسه حساب شما برای تعیین مدیر: " + user.uid;
-  } else {
-    adminNotice.hidden = true;
-  }
+  // The owner's UID is configured in this file; do not expose it in the public page.
+  adminNotice.hidden = true;
   if (unsubscribe) unsubscribe();
   if (!user) {
     listEl.innerHTML = '<p class="qna-empty">برای مشاهده پرسش‌ها و پاسخ‌ها، ابتدا وارد حساب خودت شو.</p>';
