@@ -14,8 +14,9 @@ const submit = document.getElementById('authSubmit');
 const googleButton = document.getElementById('googleSignIn');
 let mode = 'signup';
 let auth = null;
+let firebaseInitError = null;
 const configReady = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes('PASTE_') && firebaseConfig.projectId && !firebaseConfig.projectId.includes('PASTE_') && firebaseConfig.appId && !firebaseConfig.appId.includes('PASTE_');
-if (configReady) { try { auth = getAuth(initializeApp(firebaseConfig)); } catch (e) { console.error(e); } }
+if (configReady) { try { auth = getAuth(initializeApp(firebaseConfig)); } catch (e) { firebaseInitError = e; console.error('NOVENTRA Firebase initialization failed:', e); } }
 function message(text, error=false) { status.textContent=text; status.classList.toggle('error',error); }
 function setMode(next) {
   mode=next;
@@ -57,7 +58,7 @@ form?.addEventListener('submit',async e=>{
 });
 
 googleButton?.addEventListener('click', async () => {
-  if (!auth) { message('تنظیمات Firebase هنوز آماده نیست.', true); return; }
+  if (!auth) { const detail = firebaseInitError?.code ? ` (${firebaseInitError.code})` : ''; message(`اتصال Firebase برقرار نشد${detail}. صفحه را تازه‌سازی کن؛ اگر ادامه داشت، خطای کنسول مرورگر را بررسی می‌کنیم.`, true); return; }
   googleButton.disabled = true;
   googleButton.textContent = 'در حال اتصال به گوگل…';
   try {
