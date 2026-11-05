@@ -8,28 +8,40 @@
   <style>
     :root{color-scheme:dark;--bg:#090d13;--panel:#111923;--gold:#c9a66b;--silver:#dce3ec;--muted:#aab5c3}
     *{box-sizing:border-box}
-    body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#1c2938 0,transparent 48%),var(--bg);color:var(--silver);font-family:Tahoma,Arial,sans-serif;display:grid;place-items:center;padding:24px}
-    main{width:min(720px,100%);border:1px solid #b997623d;background:linear-gradient(145deg,#151f2b,#0d131c);padding:clamp(26px,6vw,54px);text-align:center}
+    body{margin:0;min-height:100vh;background:radial-gradient(circle at 50% 0,#1c2938 0,transparent 48%),var(--bg);color:var(--silver);font-family:Tahoma,Arial,sans-serif;padding:28px 18px}
+    main{width:min(820px,100%);margin:5vh auto;border:1px solid #b997623d;background:linear-gradient(145deg,#151f2b,#0d131c);padding:clamp(24px,5vw,52px)}
+    header{text-align:center;margin-bottom:34px}
     .brand{letter-spacing:5px;color:var(--gold);font:600 14px Georgia,serif}
-    h1{font-size:clamp(25px,5vw,38px);margin:18px 0 10px}
+    h1{font-size:clamp(26px,5vw,38px);margin:18px 0 10px}
     p{color:var(--muted);line-height:2}
-    .chapter{margin:30px auto 0;padding:24px;border:1px solid #b9976255;background:#0b1119;text-align:right}
-    .chapter small{color:var(--gold)}
-    .chapter h2{font-size:20px;margin:10px 0}
-    .chapter a{display:inline-block;margin-top:12px;padding:12px 20px;background:var(--gold);color:#111;text-decoration:none;font-weight:bold}
-    .back{display:inline-block;margin-top:28px;color:var(--muted);text-decoration:none}
+    .chapters{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px}
+    .chapter{padding:24px;border:1px solid #b9976255;background:#0b1119}
+    .chapter small{color:var(--gold);letter-spacing:2px}
+    .chapter h2{font-size:20px;margin:12px 0}
+    .chapter a{display:inline-block;margin-top:12px;padding:12px 18px;background:var(--gold);color:#111;text-decoration:none;font-weight:bold}
+    .back{display:block;text-align:center;margin-top:30px;color:var(--muted);text-decoration:none}
   </style>
 </head>
 <body>
   <main>
-    <div class="brand">NOVENTRA</div>
-    <h1>کتابخانه آشپزی</h1>
-    <p>به مسیر یادگیری آشپزی نوونترا خوش آمدید. فصل‌های آموزشی را از این صفحه دنبال کنید.</p>
-    <section class="chapter">
-      <small>CHAPTER 01</small>
-      <h2>فصل اول آموزش آشپزی</h2>
-      <p>برای مشاهده و مطالعه فایل آموزشی فصل اول، روی دکمه زیر بزنید.</p>
-      <a href="./NOVENTRAcooking.pdf" target="_blank" rel="noopener">مشاهده فصل اول (PDF)</a>
+    <header>
+      <div class="brand">NOVENTRA</div>
+      <h1>کتابخانه آشپزی</h1>
+      <p>به مسیر یادگیری آشپزی نوونترا خوش آمدید. هر دو فصل آموزشی از این صفحه در دسترس هستند.</p>
+    </header>
+    <section class="chapters" aria-label="فصل‌های آموزش آشپزی">
+      <article class="chapter">
+        <small>CHAPTER 01</small>
+        <h2>فصل اول آموزش آشپزی</h2>
+        <p>مطالعه فایل آموزشی فصل اول.</p>
+        <a href="./NOVENTRAcooking.pdf" target="_blank" rel="noopener">مشاهده فصل اول</a>
+      </article>
+      <article class="chapter">
+        <small>CHAPTER 02</small>
+        <h2>فصل دوم آموزش آشپزی</h2>
+        <p>ورود به محتوای آموزشی فصل دوم.</p>
+        <a href="./index%20(2).html">مشاهده فصل دوم</a>
+      </article>
     </section>
     <a class="back" href="../index.html">بازگشت به صفحه اصلی NOVENTRA</a>
   </main>
