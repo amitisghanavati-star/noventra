@@ -1316,3 +1316,109 @@ html[lang="en"] .noventra-ai-message.user { border-radius:13px 13px 3px 13px; }
 .qna-signin-note,.qna-form-wrap{max-width:760px;margin:0 auto 24px;padding:22px;border:1px solid rgba(214,183,123,.3);background:#111b29;border-radius:14px}
 .qna-form{display:grid;gap:14px}.qna-form label,.qna-reply-form label{display:grid;gap:7px;color:#e9dfcf;font-size:13px}.qna-form input,.qna-form select,.qna-form textarea,.qna-reply-form textarea{width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid rgba(214,183,123,.3);border-radius:9px;color:#f4f0e8;background:#080d15;font:inherit}.qna-form textarea,.qna-reply-form textarea{resize:vertical;line-height:1.9}.qna-form button{justify-content:center;cursor:pointer}.qna-status{min-height:1.5em;margin:0;color:#d8bb83;font-size:13px}.qna-status.error{color:#ffaaa8}.qna-admin-note{direction:ltr;overflow-wrap:anywhere;color:#aeb8c6;font-size:11px}.qna-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;max-width:1100px;margin:30px auto 0}.qna-card{padding:22px;border:1px solid rgba(214,183,123,.25);border-radius:13px;background:linear-gradient(145deg,#172334,#0c131e);color:#e9edf2}.qna-card-top{display:flex;justify-content:space-between;gap:12px;color:#bfa16f;font-size:11px}.qna-card h3{margin:15px 0 8px;color:#f4f0e8;font-size:18px}.qna-question-text,.qna-answer p{white-space:pre-wrap;overflow-wrap:anywhere;color:#c3ccd7;font-size:13px;line-height:2}.qna-pending{display:inline-block;margin-top:10px;padding:4px 10px;border:1px solid rgba(214,183,123,.35);border-radius:20px;color:#d8bb83;font-size:11px}.qna-answer{margin-top:16px;padding:14px;border-right:2px solid #c8a56d;background:rgba(200,165,109,.08)}.qna-answer strong{color:#e8d3ad;font-size:12px}.qna-answer p{margin:7px 0 0}.qna-reply-form{display:grid;gap:10px;margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}.qna-reply-form button{justify-content:center;cursor:pointer}.qna-empty,.qna-error{grid-column:1/-1;text-align:center;color:#aeb8c6;padding:25px}.qna-error{color:#ffaaa8}
 @media(max-width:760px){.qna-section{padding:60px 6%}.qna-list{grid-template-columns:1fr}.qna-form-wrap{padding:16px}}
+
+
+/* ===== NOVENTRA 2026 | Dark luxury visual system ===== */
+:root {
+  color-scheme: dark;
+  --bg: #090d13;
+  --panel: #111923;
+  --panel2: #172231;
+  --silver: #aeb8c5;
+  --muted: #a0aaba;
+  --white: #f2eee6;
+  --line: rgba(190, 163, 116, .24);
+  --accent: #c9aa75;
+}
+body {
+  background: var(--bg);
+  color: var(--white);
+}
+.site-header {
+  background: rgba(9, 13, 19, .94);
+  border-bottom-color: var(--line);
+}
+.main-nav { color: #d2d7df; }
+.main-nav a:hover, .text-link:hover { color: #e5c995; }
+.main-nav .nav-link-strong, .nav-cta {
+  color: #e9d6b5;
+  border-color: rgba(201,170,117,.55);
+  background: rgba(201,170,117,.07);
+}
+.hero {
+  background:
+    radial-gradient(ellipse at 78% 34%, rgba(69,86,109,.22), transparent 43%),
+    radial-gradient(ellipse at 12% 10%, rgba(201,170,117,.12), transparent 42%),
+    #090d13;
+  border-bottom-color: var(--line);
+}
+.hero-visual {
+  background: linear-gradient(145deg, #172231, #0d141e 72%);
+  border-color: rgba(201,170,117,.38);
+  box-shadow: 0 24px 70px rgba(0,0,0,.24);
+}
+.pattern-frame { background: #101923; border-color: rgba(201,170,117,.28); }
+.pattern-frame svg path { stroke: #b6a17e; }
+.pattern-frame svg text { fill: #c0c7d0; }
+.visual-label, .frame-caption { color: #aab4c2; }
+.round-stamp { background: #101722; color: #e0c18b; }
+.trust-strip { background: #0e151f; border-color: var(--line); }
+.section, .academy-section, .library-section, .shop-section, .about-section {
+  background: #0b1119;
+}
+.section:nth-of-type(even), .academy-section, .shop-section {
+  background: #0e1621;
+}
+.section-top h2, .systems-copy h2, .journey-card h3, .shop-item h3 {
+  color: #f1eee8;
+}
+.section-description, .journey-card p, .strip-message { color: #aab4c2; }
+.journey-card, .shop-item {
+  background: linear-gradient(155deg, #172231, #101822);
+  border-color: rgba(201,170,117,.23);
+  color: #f0ede7;
+}
+.journey-featured {
+  background: linear-gradient(155deg, #202b38, #141d28);
+  border-color: rgba(201,170,117,.52);
+}
+.journey-icon { border-color: rgba(201,170,117,.38); }
+.card-arrow { border-color: var(--line); }
+.btn-light { background: #c9aa75; color: #111720; border-color: #c9aa75; }
+.btn-light:hover { background: #e0c28e; color: #0b1119; }
+.btn, .text-link { transition: color .2s ease, background-color .2s ease, border-color .2s ease, transform .2s ease; }
+.site-footer {
+  background: #070b10;
+  border-top: 1px solid var(--line);
+  color: #aeb8c6;
+}
+.site-footer .logo-type { color: #f1eee8; }
+.site-footer .logo-type small { color: #9aa5b4; }
+button, input, select, textarea { accent-color: #c9aa75; }
+:where(a, button, input, select, textarea, summary):focus-visible {
+  outline: 2px solid #e2c38e;
+  outline-offset: 3px;
+}
+img { max-width: 100%; }
+@media (max-width: 760px) {
+  .site-header { padding: 12px 5%; }
+  .main-nav {
+    background: #101923;
+    border: 1px solid var(--line);
+    box-shadow: 0 18px 40px rgba(0,0,0,.35);
+  }
+  .hero { padding: 52px 6% 68px; }
+  .section, .academy-section, .library-section, .shop-section, .about-section {
+    padding: 62px 6%;
+  }
+  .trust-strip { background: #0e151f; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
