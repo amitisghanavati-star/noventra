@@ -1422,3 +1422,24 @@ img { max-width: 100%; }
     scroll-behavior: auto !important;
   }
 }
+
+
+/* Lightweight interaction polish */
+.fashion-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.015);
+  transition: transform 900ms cubic-bezier(.2,.65,.25,1);
+}
+.fashion-slide.is-active img { transform: scale(1.055); }
+.fashion-slide-shade {
+  background: linear-gradient(90deg, rgba(5,9,14,.78), rgba(5,9,14,.16) 68%, rgba(5,9,14,.08));
+}
+.fashion-slide-copy { text-shadow: 0 2px 22px rgba(0,0,0,.45); }
+.fashion-slide-copy a { transition: transform .2s ease, color .2s ease; }
+.fashion-slide-copy a:hover { color: #f0d5a3; transform: translateX(-3px); }
+@media (prefers-reduced-motion: reduce) {
+  .fashion-slide img, .fashion-slide-copy a { transition: none; }
+  .fashion-slide.is-active img { transform: none; }
+}
