@@ -586,13 +586,42 @@ if (slider) {
     utterance.rate = .96;
     window.speechSynthesis.speak(utterance);
   }
-  function respond(message) {
+  async function respond(message) {
     const clean = message.trim();
     if (!clean) return;
-    addMessage(clean,'user');
-    const reply = answerFor(clean);
-    lastReply = reply;
-    window.setTimeout(() => addMessage(reply,'assistant'), 180);
+    addMessage(clean, 'user');
+    const waiting = isEnglish() ? 'Thinking…' : 'در حال نوشتن پاسخ…';
+    addMessage(waiting, 'assistant');
+    const pendingBubble = messages.lastElementChild;
+
+    try {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: clean })
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        const detail = typeof data.error === 'string' ? data.error : (data.error?.message || '');
+        throw new Error(detail || 'Gemini request failed');
+      }
+      const reply = (data.candidates?.[0]?.content?.parts || [])
+        .map(part => part.text || '')
+        .join('')
+        .trim();
+      if (!reply) throw new Error('Gemini returned an empty response');
+      lastReply = reply;
+      pendingBubble.textContent = reply;
+      messages.scrollTop = messages.scrollHeight;
+    } catch (error) {
+      const fallback = answerFor(clean);
+      const notice = isEnglish()
+        ? 'The AI service could not be reached right now. Website guide: '
+        : 'فعلاً ارتباط با هوش مصنوعی برقرار نشد. راهنمای سایت: ';
+      lastReply = fallback;
+      pendingBubble.textContent = notice + fallback;
+      messages.scrollTop = messages.scrollHeight;
+    }
   }
   launcher.addEventListener('click', () => panel.hidden ? openPanel() : closePanel());
   close.addEventListener('click',closePanel);
