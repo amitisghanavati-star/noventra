@@ -595,7 +595,7 @@ if (slider) {
     const pendingBubble = messages.lastElementChild;
 
     try {
-      const response = await fetch('/api/chat', {
+      const response = await fetch('https://noventra-gemini.artimic-ghanavati.workers.dev/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: clean })
@@ -605,9 +605,9 @@ if (slider) {
         const detail = typeof data.error === 'string' ? data.error : (data.error?.message || '');
         throw new Error(detail || 'Gemini request failed');
       }
-      const reply = (data.candidates?.[0]?.content?.parts || [])
+      const reply = (typeof data.reply === 'string' ? data.reply : (data.candidates?.[0]?.content?.parts || [])
         .map(part => part.text || '')
-        .join('')
+        .join(''))
         .trim();
       if (!reply) throw new Error('Gemini returned an empty response');
       lastReply = reply;
