@@ -602,8 +602,10 @@ if (slider) {
       });
       const data = await response.json();
       if (!response.ok) {
-        const detail = typeof data.error === 'string' ? data.error : (data.error?.message || '');
-        throw new Error(detail || 'Gemini request failed');
+        // The Cloudflare Worker returns its diagnostic message in "reply".
+        const detail = typeof data.reply === 'string' ? data.reply
+          : (typeof data.error === 'string' ? data.error : (data.error?.message || ''));
+        throw new Error(detail || `Gemini request failed (HTTP ${response.status})`);
       }
       const reply = (typeof data.reply === 'string' ? data.reply : (data.candidates?.[0]?.content?.parts || [])
         .map(part => part.text || '')
@@ -618,8 +620,12 @@ if (slider) {
       const notice = isEnglish()
         ? 'NOVENTRA AI could not get a response from Gemini. Please try again in a moment. The website FAQ has not been used as a substitute.'
         : 'ارتباط با Gemini برقرار نشد یا پاسخی از آن دریافت نشد. لطفاً کمی بعد دوباره تلاش کن. در این وضعیت پاسخ‌های ثابت راهنمای سایت جایگزین پاسخ هوش مصنوعی نمی‌شوند.';
-      lastReply = notice;
-      pendingBubble.textContent = notice;
+      const detail = error && error.message ? error.message : '';
+      const diagnostic = detail && detail !== 'Gemini request failed'
+        ? (isEnglish() ? '\\n\\nDetails: ' : '\\n\\nجزئیات خطا: ') + detail
+        : '';
+      lastReply = notice + diagnostic;
+      pendingBubble.textContent = lastReply;
       messages.scrollTop = messages.scrollHeight;
     }
   }
