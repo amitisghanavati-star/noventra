@@ -614,12 +614,12 @@ if (slider) {
       pendingBubble.textContent = reply;
       messages.scrollTop = messages.scrollHeight;
     } catch (error) {
-      const fallback = answerFor(clean);
+      console.error('NOVENTRA Gemini connection error:', error);
       const notice = isEnglish()
-        ? 'The AI service could not be reached right now. Website guide: '
-        : 'فعلاً ارتباط با هوش مصنوعی برقرار نشد. راهنمای سایت: ';
-      lastReply = fallback;
-      pendingBubble.textContent = notice + fallback;
+        ? 'NOVENTRA AI could not get a response from Gemini. Please try again in a moment. The website FAQ has not been used as a substitute.'
+        : 'ارتباط با Gemini برقرار نشد یا پاسخی از آن دریافت نشد. لطفاً کمی بعد دوباره تلاش کن. در این وضعیت پاسخ‌های ثابت راهنمای سایت جایگزین پاسخ هوش مصنوعی نمی‌شوند.';
+      lastReply = notice;
+      pendingBubble.textContent = notice;
       messages.scrollTop = messages.scrollHeight;
     }
   }
