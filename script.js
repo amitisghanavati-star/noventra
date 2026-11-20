@@ -291,7 +291,7 @@ if (slider) {
 })();
 
 
-/* NOVENTRA AI — direct generative AI interface with optional browser voice */
+/* NOVENTRA temporary FAQ guide — AI engines are paused while being repaired. */
 (() => {
   const root = document.getElementById('noventraAI');
   if (!root) return;
@@ -310,10 +310,10 @@ if (slider) {
   const isEnglish = () => document.documentElement.lang === 'en';
   const copy = {
     fa: {
-      welcome:'سلام! من هوش مصنوعی NOVENTRA هستم. سؤال‌هایت را بپرس؛ برای یادگیری، حل مسئله و بررسی موضوعات مختلف همراهت هستم.',
+      welcome:'سلام! من راهنمای موقت سایت NOVENTRA هستم. درباره شاخه‌های آموزشی، درس‌ها، فایل‌ها و عضویت سؤال بپرس.',
       first:'امروز درباره چه موضوعی می‌خواهی گفت‌وگو کنیم؟',
       placeholder:'پیامت را بنویس...',
-      foot:'پاسخ‌گویی هوشمند با OpenAI و موتور پشتیبان Gemini',
+      foot:'راهنمای موقت سایت · پاسخ‌های آماده',
       branches:'نوونترا چهار مسیر آموزشی دارد: خیاطی، آشپزی، برنامه‌نویسی و زبان‌های انسانی. از بخش «شاخه‌های نوونترا» در صفحه می‌توانی وارد هر مسیر شوی.',
       sewing:'برای ورود به مسیر خیاطی، بخش خیاطی و کتابخانه را ببین. فایل فصل اول خیاطی از لینک «مطالعهٔ فصل اول خیاطی NOVENTRA» در صفحه در دسترس است.',
       cooking:'برای آشپزی به بخش NOVENTRA Kitchen برو. فایل PDF فصل اول آشپزی در همان بخش قرار دارد.',
@@ -325,10 +325,10 @@ if (slider) {
       fallback:'می‌توانم دربارهٔ شاخه‌های آموزشی، خیاطی، آشپزی، برنامه‌نویسی، زبان‌ها، فایل‌ها و عضویت راهنمایی‌ات کنم. لطفاً سؤال را کمی دقیق‌تر بپرس.'
     },
     en: {
-      welcome:'Hello! I’m NOVENTRA AI. Ask me questions about learning, problem-solving, or exploring new topics.',
+      welcome:'Hello! I’m the temporary NOVENTRA website guide. Ask about learning branches, lessons, files, and membership.',
       first:'What would you like to explore today?',
       placeholder:'Write your message...',
-      foot:'Intelligent responses powered by OpenAI with Gemini backup',
+      foot:'Temporary website guide · prepared answers',
       branches:'NOVENTRA offers four learning paths: Sewing, Cooking, Programming, and human Languages. Choose a path from the NOVENTRA branches section.',
       sewing:'Explore the Sewing section and Library. The first NOVENTRA Sewing chapter PDF is linked on the page.',
       cooking:'Visit NOVENTRA Kitchen. The first Cooking chapter PDF is available in that section.',
@@ -389,11 +389,32 @@ if (slider) {
     utterance.rate = .96;
     window.speechSynthesis.speak(utterance);
   }
+  function temporaryFAQAnswer(message) {
+    const q = message.toLocaleLowerCase('fa').replace(/[؟?!.,،؛:]/g, ' ').replace(/\s+/g, ' ').trim();
+    const has = (...words) => words.some(word => q.includes(word));
+    const t = copy[isEnglish() ? 'en' : 'fa'];
+    if (has('سلام','درود','hello','hi','hey')) return isEnglish() ? 'Hello! Welcome to NOVENTRA. I can guide you through our learning branches, lessons, files, membership, and shop.' : 'سلام! به نوونترا خوش آمدی. من راهنمای موقت سایت هستم و می‌توانم درباره شاخه‌های آموزشی، درس‌ها، فایل‌ها، عضویت و فروشگاه راهنمایی‌ات کنم.';
+    if (has('شاخه','شاخه‌ها','رشته','آموزش','branch','branches','courses')) return t.branches;
+    if (has('خیاط','دوخت','الگو','sewing','pattern')) return t.sewing;
+    if (has('آشپز','غذا','شیرینی','cooking','kitchen','recipe')) return t.cooking;
+    if (has('برنامه نویسی','برنامه‌نویسی','کدنویسی','کد','programming','coding')) return t.programming;
+    if (has('زبان','انگلیسی','فرانسوی','آلمانی','language','languages')) return t.languages;
+    if (has('فایل','پی دی اف','pdf','کتابخانه','library','download')) return t.files;
+    if (has('عضویت','ثبت نام','ثبت‌نام','عضو','join','register','membership')) return t.join;
+    if (has('خرید','فروشگاه','پرداخت','shop','buy','purchase')) return t.shop;
+    if (has('کمک','چه کار','چه کاری','راهنما','help','what can you do')) return isEnglish() ? 'I can guide you to NOVENTRA’s Sewing, Cooking, Programming, and Languages sections, explain where to find published learning files, and help with membership and the shop.' : 'می‌توانم مسیرهای خیاطی، آشپزی، برنامه‌نویسی و زبان‌ها را معرفی کنم؛ محل فایل‌های آموزشی منتشرشده را نشان بدهم و درباره عضویت و فروشگاه راهنمایی‌ات کنم.';
+    return t.fallback;
+  }
+
   async function respond(message) {
     const clean = message.trim();
     if (!clean) return;
 
     addMessage(clean, 'user');
+    const answer = temporaryFAQAnswer(clean);
+    addMessage(answer, 'assistant');
+    lastReply = answer;
+    return;
     const waiting = isEnglish() ? 'Thinking…' : 'در حال نوشتن پاسخ…';
     addMessage(waiting, 'assistant');
     const pendingBubble = messages.lastElementChild;
