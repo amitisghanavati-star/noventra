@@ -589,44 +589,84 @@ if (slider) {
   async function respond(message) {
     const clean = message.trim();
     if (!clean) return;
+
     addMessage(clean, 'user');
     const waiting = isEnglish() ? 'Thinking…' : 'در حال نوشتن پاسخ…';
     addMessage(waiting, 'assistant');
     const pendingBubble = messages.lastElementChild;
 
+    const workerUrl = 'https://noventra-gemini.artimic-ghanavati.workers.dev/';
+    const controller = new AbortController();
+    const timeoutId = window.setTimeout(() => controller.abort(), 65000);
+
     try {
-      const response = await fetch('https://noventra-gemini.artimic-ghanavati.workers.dev/', {
+      const response = await fetch(workerUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: clean })
+        mode: 'cors',
+        credentials: 'omit',
+        cache: 'no-store',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({ message: clean }),
+        signal: controller.signal
       });
-      const data = await response.json();
-      if (!response.ok) {
-        // The Cloudflare Worker returns its diagnostic message in "reply".
-        const detail = typeof data.reply === 'string' ? data.reply
-          : (typeof data.error === 'string' ? data.error : (data.error?.message || ''));
-        throw new Error(detail || `Gemini request failed (HTTP ${response.status})`);
+
+      const responseText = await response.text();
+      let data;
+      try {
+        data = responseText ? JSON.parse(responseText) : {};
+      } catch (_) {
+        throw new Error(`Worker returned non-JSON data (HTTP ${response.status}).`);
       }
-      const reply = (typeof data.reply === 'string' ? data.reply : (data.candidates?.[0]?.content?.parts || [])
-        .map(part => part.text || '')
-        .join(''))
-        .trim();
-      if (!reply) throw new Error('Gemini returned an empty response');
+
+      if (!response.ok) {
+        const detail = typeof data.reply === 'string'
+          ? data.reply
+          : (data.error?.message || data.error || `HTTP ${response.status}`);
+        throw new Error(detail);
+      }
+
+      const reply = typeof data.reply === 'string' ? data.reply.trim() : '';
+      if (!reply) throw new Error('Worker returned an empty reply.');
+
       lastReply = reply;
       pendingBubble.textContent = reply;
       messages.scrollTop = messages.scrollHeight;
+
+      // Engine is reported by the Worker; keep it visible in diagnostics.
+      console.info('NOVENTRA AI response received', {
+        engine: data.engine || 'unknown',
+        fallback: Boolean(data.fallback),
+        status: response.status
+      });
     } catch (error) {
-      console.error('NOVENTRA Gemini connection error:', error);
+      console.error('NOVENTRA AI request failed:', {
+        name: error.name,
+        message: error.message,
+        workerUrl
+      });
+
+      let detail = error.message || 'Unknown network error';
+      if (error.name === 'AbortError') {
+        detail = isEnglish()
+          ? 'The request timed out while waiting for the AI service.'
+          : 'مهلت انتظار برای پاسخ هوش مصنوعی تمام شد.';
+      } else if (error instanceof TypeError && /fetch/i.test(error.message)) {
+        detail = isEnglish()
+          ? 'The browser could not complete the connection. Check the Worker URL, CORS settings, and network access.'
+          : 'مرورگر نتوانست اتصال را کامل کند. آدرس Worker، تنظیمات CORS و دسترسی شبکه باید بررسی شوند.';
+      }
+
       const notice = isEnglish()
-        ? 'NOVENTRA AI could not get a response from Gemini. Please try again in a moment. The website FAQ has not been used as a substitute.'
-        : 'ارتباط با Gemini برقرار نشد یا پاسخی از آن دریافت نشد. لطفاً کمی بعد دوباره تلاش کن. در این وضعیت پاسخ‌های ثابت راهنمای سایت جایگزین پاسخ هوش مصنوعی نمی‌شوند.';
-      const detail = error && error.message ? error.message : '';
-      const diagnostic = detail && detail !== 'Gemini request failed'
-        ? (isEnglish() ? '\\n\\nDetails: ' : '\\n\\nجزئیات خطا: ') + detail
-        : '';
-      lastReply = notice + diagnostic;
+        ? 'NOVENTRA AI could not complete the request. Please try again. Website guide answers are not substituted for AI responses.'
+        : 'درخواست به دستیار هوشمند نوونترا کامل نشد. لطفاً دوباره تلاش کن. پاسخ‌های ثابت راهنمای سایت جایگزین پاسخ هوش مصنوعی نمی‌شوند.';
+      lastReply = notice + (detail ? (isEnglish() ? '\\n\\nDetails: ' : '\\n\\nجزئیات خطا: ') + detail : '');
       pendingBubble.textContent = lastReply;
       messages.scrollTop = messages.scrollHeight;
+    } finally {
+      window.clearTimeout(timeoutId);
     }
   }
   launcher.addEventListener('click', () => panel.hidden ? openPanel() : closePanel());
