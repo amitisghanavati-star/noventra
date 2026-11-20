@@ -291,7 +291,7 @@ if (slider) {
 })();
 
 
-/* NOVENTRA AI Guide — guided FAQ prototype with optional browser voice */
+/* NOVENTRA AI — direct generative AI interface with optional browser voice */
 (() => {
   const root = document.getElementById('noventraAI');
   if (!root) return;
@@ -307,19 +307,13 @@ if (slider) {
   const quick = document.getElementById('noventraAIQuick');
   let recognition = null;
   let lastReply = '';
-  let libraryCatalog = null;
-  let siteAuthorContext = false;
-  fetch('knowledge/noventra-library.json')
-    .then(response => { if (!response.ok) throw new Error('Library catalog unavailable'); return response.json(); })
-    .then(data => { libraryCatalog = data; })
-    .catch(() => { libraryCatalog = null; });
   const isEnglish = () => document.documentElement.lang === 'en';
   const copy = {
     fa: {
-      welcome:'سلام! من راهنمای هوشمند نوونترا هستم. برای پیدا کردن مسیر یادگیری یا بخش موردنظرت کمکت می‌کنم.',
-      first:'از کدام بخش نوونترا می‌خواهی شروع کنی؟',
+      welcome:'سلام! من هوش مصنوعی NOVENTRA هستم. سؤال‌هایت را بپرس؛ برای یادگیری، حل مسئله و بررسی موضوعات مختلف همراهت هستم.',
+      first:'امروز درباره چه موضوعی می‌خواهی گفت‌وگو کنیم؟',
       placeholder:'پیامت را بنویس...',
-      foot:'راهنمای نسخهٔ آغازین · پاسخ‌گویی صوتی در مرورگرهای پشتیبانی‌شده',
+      foot:'پاسخ‌گویی هوشمند با OpenAI و موتور پشتیبان Gemini',
       branches:'نوونترا چهار مسیر آموزشی دارد: خیاطی، آشپزی، برنامه‌نویسی و زبان‌های انسانی. از بخش «شاخه‌های نوونترا» در صفحه می‌توانی وارد هر مسیر شوی.',
       sewing:'برای ورود به مسیر خیاطی، بخش خیاطی و کتابخانه را ببین. فایل فصل اول خیاطی از لینک «مطالعهٔ فصل اول خیاطی NOVENTRA» در صفحه در دسترس است.',
       cooking:'برای آشپزی به بخش NOVENTRA Kitchen برو. فایل PDF فصل اول آشپزی در همان بخش قرار دارد.',
@@ -331,10 +325,10 @@ if (slider) {
       fallback:'می‌توانم دربارهٔ شاخه‌های آموزشی، خیاطی، آشپزی، برنامه‌نویسی، زبان‌ها، فایل‌ها و عضویت راهنمایی‌ات کنم. لطفاً سؤال را کمی دقیق‌تر بپرس.'
     },
     en: {
-      welcome:'Hello! I’m the NOVENTRA learning guide. I can help you find a learning path or locate a section of the site.',
-      first:'Which NOVENTRA learning path would you like to explore?',
+      welcome:'Hello! I’m NOVENTRA AI. Ask me questions about learning, problem-solving, or exploring new topics.',
+      first:'What would you like to explore today?',
       placeholder:'Write your message...',
-      foot:'Early guide edition · Voice supported in compatible browsers',
+      foot:'Intelligent responses powered by OpenAI with Gemini backup',
       branches:'NOVENTRA offers four learning paths: Sewing, Cooking, Programming, and human Languages. Choose a path from the NOVENTRA branches section.',
       sewing:'Explore the Sewing section and Library. The first NOVENTRA Sewing chapter PDF is linked on the page.',
       cooking:'Visit NOVENTRA Kitchen. The first Cooking chapter PDF is available in that section.',
@@ -386,197 +380,6 @@ if (slider) {
     }
     messages.appendChild(bubble);
     messages.scrollTop = messages.scrollHeight;
-  }
-  function answerFor(message) {
-    const q = message.toLocaleLowerCase()
-      .replace(/[؟?!.,،؛:]/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim();
-    const en = isEnglish();
-    const t = copy[en ? 'en' : 'fa'];
-    const has = (...terms) => terms.some(term => q.includes(term));
-    const reply = (fa, english) => en ? english : fa;
-
-    // Conversational self-identification only; never use this as account authentication.
-    if (has('من خود مدرس','من مدرس و نویسنده','من نویسنده','من مدرس','من سازنده سایت','من صاحب سایت',
-            'i am the instructor','i am the teacher','i am the author','i am the site owner','i created this site')) {
-      siteAuthorContext = true;
-      return reply(
-        'چه عالی! خوشحالم با مدرس و نویسندهٔ نوونترا هم‌صحبتم. 🌷 اینجا خانه‌ای است که با دانش و خلاقیت ساخته‌ای. بگو امروز چطور می‌توانم در پیشبرد نوونترا کمکت کنم؟',
-        'That’s wonderful! I’m glad to be speaking with NOVENTRA’s instructor and author. 🌷 This is the learning community you’ve built with your knowledge and creativity. How can I help you move NOVENTRA forward today?'
-      );
-    }
-
-    // Respond to the learner's actual intent before classifying the subject.
-    // Answer catalog questions from the published, versioned NOVENTRA knowledge file.
-    if (libraryCatalog && has('چه شاخه','چه دوره','چه فصل','کدام فصل','چه فایل','فایل های منتشر','فایل‌های منتشر','منتشر شده','منتشرشده','what courses','which courses','published files','available chapters')) {
-      const lines = libraryCatalog.branches.map(branch => {
-        const published = branch.published.map(item => en
-          ? 'Chapter ' + item.chapter + ': ' + item.title_en
-          : 'فصل ' + item.chapter + ': ' + item.title_fa).join('، ');
-        const status = published || (en ? 'No chapter PDF published yet' : 'هنوز فایل فصل منتشر نشده');
-        return (en ? branch.name + ': ' : branch.name_fa + ': ') + status;
-      });
-      return lines.join('\\n') + (en
-        ? '\\nOnly listed files are confirmed as published.'
-        : '\\nاین فهرست فقط فایل‌های ثبت‌شده و منتشرشده را تأیید می‌کند.');
-    }
-
-    if (has('سلام','درود','صبح بخیر','عصر بخیر','شب بخیر','hello','hi','hey','good morning')) {
-      return reply(
-        'سلام، خوش آمدی! 😊 بگو دنبال یادگیری چه چیزی هستی یا در کدام قسمت سایت به راهنمایی نیاز داری.',
-        'Hello and welcome! 😊 Tell me what you want to learn or where you need help on the site.'
-      );
-    }
-    if (has('تو کی هستی','اسمت چیه','نامت چیست','who are you','your name')) {
-      return reply(
-        'من NOVENTRA AI هستم؛ راهنمای یادگیری نوونترا. کارم کمک به پیدا کردن دوره‌ها، فایل‌ها و مسیر درست یادگیری است؛ مدرس دوره‌ها نیستم.',
-        'I’m NOVENTRA AI, the learning guide for NOVENTRA. I help learners find courses, files, and the right learning path; I am not the course instructor.'
-      );
-    }
-    if (has('چه کار','چیکار','چه کمکی','قابلیت','چه بلدی','can you','what can you','help me')) {
-      return reply(
-        'می‌توانم مسیرهای آموزشی نوونترا را معرفی کنم، محل فایل‌های منتشرشده را نشان بدهم و برای عضویت یا فروشگاه راهنمایی کنم. هنوز به هوش مصنوعی مولد متصل نیستم و برای پرسش‌های تخصصی باید به محتوای درس یا مدرس مراجعه کنی.',
-        'I can introduce NOVENTRA’s learning paths, help locate published files, and guide you through membership and the shop. I am not yet connected to a generative AI model, so specialist questions should be checked against the lessons or with the instructor.'
-      );
-    }
-
-    // Answer instructor/teacher questions directly. Never invent a person's name:
-    // the published site content currently does not identify course instructors.
-    if (siteAuthorContext && has('اسم مدرس','نام مدرس','مدرس کیه','اسم استاد','نام استاد','who is the teacher','instructor name','teacher name')) {
-      return reply(
-        'در همین گفت‌وگو گفتی خودت مدرس و نویسندهٔ نوونترا هستی؛ پس متوجه‌ام که منظورت خودت هستی. نامی را بدون تأیید تو به معرفی عمومی سایت اضافه نمی‌کنم.',
-        'You told me in this conversation that you are NOVENTRA’s instructor and author, so I understand you mean yourself. I will not add a public name to the website without your confirmation.'
-      );
-    }
-    if (has('اسم مدرس','نام مدرس','مدرس کیه','مدرس چیه','مدرس چه کسی','اسم استاد','نام استاد','استاد کیه','معلم کیه','مربی کیه','مدرس دوره','مدرس این دوره','چه کسی تدریس','who is the teacher','who teaches','instructor name','course instructor','teacher name','who is teaching')) {
-      return reply(
-        'در محتوای منتشرشدهٔ فعلی نوونترا، نام مدرس این دوره ثبت نشده است؛ بنابراین نمی‌خواهم نامی را حدس بزنم. برای اعلام نام دقیق، باید اطلاعات مدرس در صفحهٔ همان دوره یا معرفی رسمی آن اضافه شود.',
-        'The currently published NOVENTRA content does not list this course’s instructor, so I won’t guess a name. The instructor’s name needs to be added to the course page or its official description.'
-      );
-    }
-
-    // Müller is a patternmaking system, not a website library or a programming term.
-    // Handle it before broad sewing/library matches so the learner gets a relevant answer.
-    if (has('مولر','muller','müller')) {
-      if (has('کتابخانه','library')) return reply(
-        'متد مولر را در کتابخانهٔ عمومی سایت جست‌وجو نکن؛ آن بخش فعلاً آرشیو عمومی منابع است. برای معرفی سیستم‌های الگوسازی، از منوی بالای سایت روی «روش‌های الگوسازی» بزن. اگر دنبال جزوه یا درس کامل مولر هستی، هنوز باید محتوای آن درس به کتابخانه اضافه شود.',
-        'Do not look for the Müller method in the general Library; that area is currently a general resource archive. Use “Patternmaking Methods” in the top menu for the introduction to pattern systems. A full Müller lesson or handout must be added to the Library first.'
-      );
-      if (has('کجا','از کجا','پیدا','بخش','where','find','section')) return reply(
-        'برای معرفی متد مولر، از منوی بالای سایت وارد «روش‌های الگوسازی» شو. کتابخانهٔ عمومی سایت فعلاً درس کامل مولر را در اختیار ندارد.',
-        'For an introduction to Müller, open “Patternmaking Methods” from the top menu. The general Library does not currently contain a full Müller lesson.'
-      );
-      if (has('چیست','چیه','یعنی چه','توضیح','معرفی','what is','explain','meaning')) return reply(
-        'متد مولر (Müller) یکی از سیستم‌های الگوسازی لباس است. در این روش، الگو بر پایهٔ اندازه‌های بدن و قواعد مخصوص همان سیستم رسم و تنظیم می‌شود. برای یادگیری درست، باید مراحل و فرمول‌های خودِ متد مولر را جدا از متد متریک دنبال کنی؛ من نباید جزئیات درس NOVENTRA را حدس بزنم.',
-        'The Müller method is a clothing patternmaking system. Patterns are drafted and adjusted using body measurements and the rules specific to that system. Learn its steps and formulas separately from the Metric method; I should not guess the details of NOVENTRA’s lesson.'
-      );
-      return reply(
-        'متد مولر مربوط به الگوسازی لباس است. برای معرفی سیستم‌ها، بخش «روش‌های الگوسازی» در صفحهٔ اصلی نوونترا را باز کن. اگر منظورت یک مرحله یا فرمول مشخص از متد مولر است، نام همان مرحله را بپرس تا راهنمایی‌ات کنم؛ اگر هنوز در درس‌های منتشرشده نیست، صریح می‌گویم.',
-        'Müller is a clothing patternmaking system. Open “Patternmaking Methods” on the NOVENTRA home page for an introduction. If you mean a particular step or formula, ask about that step and I’ll guide you; if it is not covered in the published lessons yet, I’ll say so.'
-      );
-    }
-
-    // Specific branch questions and useful follow-up directions.
-    // Check Chapter Two explicitly before the broad cooking-file response.
-    if (has('آشپز','اشپز','آشپزی','اشپزی','غذا','kitchen','cooking') &&
-        has('فصل','chapter') &&
-        has('دوم','۲','2','second','two')) {
-      const kitchen = libraryCatalog?.branches?.find(branch => branch.id === 'kitchen');
-      const chapterTwo = kitchen?.published?.find(item => item.chapter === 2);
-      if (chapterTwo) {
-        const href = chapterTwo.url || chapterTwo.file;
-        return reply(
-          'فصل دوم آشپزی منتشر شده است. برای مطالعه، وارد NOVENTRA Kitchen شو و فایل فصل دوم را باز کن: ' + href,
-          'Cooking Chapter Two is published. Open NOVENTRA Kitchen and select the Chapter Two file: ' + href
-        );
-      }
-      return reply(
-        'فصل دوم آشپزی هنوز در سایت منتشر نشده است. در حال حاضر فقط فصل اول منتشر شده؛ برای مطالعه آن وارد بخش NOVENTRA Kitchen شو و گزینه «مطالعه فصل اول» را انتخاب کن. به‌محض انتشار فصل دوم، وضعیت این راهنما هم به‌روزرسانی می‌شود.',
-        'Cooking Chapter Two has not been published on the website yet. Only Chapter One is currently available. Visit NOVENTRA Kitchen and choose “Read Chapter One”. This guide will be updated when Chapter Two is published.'
-      );
-    }
-    if (has('آشپز','غذا','آشپزی','دستور پخت','دستورپخت','kitchen','cooking','recipe','food')) {
-      if (has('فصل','pdf','فایل','دانلود','chapter','file','download')) return reply(
-        'برای دریافت محتوای آشپزی، به بخش NOVENTRA Kitchen در صفحه برو و لینک «مطالعه فصل اول آشپزی» را باز کن. فصل اول منتشر شده است؛ فصل دوم در برنامهٔ آموزشی بعدی قرار دارد.',
-        'Open the NOVENTRA Kitchen section and select “Read Chapter One — Cooking (PDF)”. Chapter One is published; Chapter Two is part of the upcoming learning plan.'
-      );
-      if (has('کجا','از کجا','پیدا','where','find')) return reply(
-        'بخش آشپزی در صفحهٔ اصلی با عنوان NOVENTRA Kitchen مشخص شده است. از منوی بالای سایت هم می‌توانی به آن بروی.',
-        'Find NOVENTRA Kitchen on the main page, or use the top navigation to reach it.'
-      );
-      return reply(
-        'شاخهٔ NOVENTRA Kitchen برای آموزش آشپزی طراحی شده است؛ هدف فقط ارائهٔ دستور نیست، بلکه شناخت مواد اولیه، طعم‌ها، دلیل هر مرحله و تکنیک اجرای درست است. برای شروع، فصل اول منتشرشده را بخوان.',
-        'NOVENTRA Kitchen teaches more than recipes: it explains ingredients, flavor, the reason behind each step, and practical technique. Start with the published first chapter.'
-      );
-    }
-    if (has('خیاط','دوخت','الگو','اندازه گیری','اندازه‌گیری','متریک','مولر','sewing','tailor','pattern','muller','metric')) {
-      if (has('فصل','pdf','فایل','دانلود','chapter','file','download')) return reply(
-        'فایل فصل اول خیاطی از لینک «مطالعهٔ فصل اول خیاطی NOVENTRA» در صفحه باز می‌شود. برای ادامهٔ آموزش، بخش خیاطی و کتابخانه را دنبال کن.',
-        'Open “Read the first chapter of NOVENTRA Sewing” on the page to access the first chapter PDF. Follow the Sewing and Library sections for further lessons.'
-      );
-      if (has('متریک','مولر','muller','metric','روش')) return reply(
-        'نوونترا روش‌های الگوسازی را جداگانه آموزش می‌دهد تا منطق هر سیستم روشن باشد؛ از جمله متریک و مولر، و در ادامه روش‌های دیگر و الگوهای تجاری. برای انتخاب روش، به درس مربوط به همان سیستم مراجعه کن.',
-        'NOVENTRA presents patternmaking systems separately so learners can understand each system’s logic, including Metric and Müller, followed by other methods and commercial patterns. See the lesson for the method you are studying.'
-      );
-      return reply(
-        'مسیر خیاطی نوونترا از شناخت ابزار و پارچه شروع می‌شود و به اندازه‌گیری، الگوسازی، برش، دوخت و پرداخت می‌رسد. اصل آموزش این است که دلیل هر خط و مرحله را بفهمی، نه اینکه فقط فرمول‌ها را حفظ کنی.',
-        'The NOVENTRA Sewing path begins with tools and fabric, then moves through measurements, patternmaking, cutting, sewing, and finishing. The goal is to understand why each line and step matters, not just memorize formulas.'
-      );
-    }
-    if (has('برنامه نویس','برنامه‌نویس','کدنویسی','کد','پایتون','جاوا','سی پلاس','سی‌پلاس','python','java','c++','programming','coding','algorithm')) {
-      if (has('فصل','pdf','فایل','دانلود','chapter','file','download')) return reply(
-        'برای مطالعهٔ فصل اول برنامه‌نویسی، وارد بخش NOVENTRA Programming شو و لینک PDF همان بخش را باز کن.',
-        'Open the NOVENTRA Programming section and select its Chapter One PDF link.'
-      );
-      if (has('از کجا','شروع','اول','begin','start','where')) return reply(
-        'مسیر برنامه‌نویسی نوونترا با مبانی برنامه‌نویسی و الگوریتم آغاز می‌شود و سپس به زبان C و مباحث پیشرفته‌تر می‌رسد. بهتر است مفاهیم پایه را محکم یاد بگیری و بعد سراغ زبان بعدی بروی.',
-        'NOVENTRA Programming starts with programming fundamentals and algorithms, then moves to C and more advanced topics. Build a strong foundation before moving to the next language.'
-      );
-      return reply(
-        'شاخهٔ Programming برای آموزش مبانی برنامه‌نویسی، الگوریتم‌ها و زبان‌های برنامه‌نویسی است. برنامهٔ توسعهٔ نوونترا می‌تواند در ادامه موضوعات گسترده‌تر علوم کامپیوتر را هم پوشش دهد.',
-        'The Programming branch covers programming fundamentals, algorithms, and programming languages. NOVENTRA may expand this path to broader computer-science subjects as it develops.'
-      );
-    }
-    if (has('زبان انسانی','زبان انگلیسی','زبان فرانسه','زبان آلمانی','مکالمه','گرامر','واژگان','languages','english','french','german','conversation','grammar')) {
-      return reply(
-        'شاخهٔ NOVENTRA Languages برای زبان‌های انسانی طراحی شده است؛ با مسیرهایی برای واژگان، دستور زبان، مکالمه، شنیدار، خواندن و نوشتن. زبان‌های برنامه‌نویسی در شاخهٔ جداگانهٔ Programming هستند.',
-        'NOVENTRA Languages is for human languages, with learning paths for vocabulary, grammar, conversation, listening, reading, and writing. Programming languages belong to the separate Programming branch.'
-      );
-    }
-    if (has('زبان','language')) return reply(
-      'منظورت زبان انسانی مثل انگلیسی و آلمانی است یا زبان برنامه‌نویسی مثل Python و C؟ اولی در NOVENTRA Languages و دومی در NOVENTRA Programming قرار می‌گیرد.',
-      'Do you mean a human language such as English or German, or a programming language such as Python or C? Human languages belong to NOVENTRA Languages; coding belongs to NOVENTRA Programming.'
-    );
-    if (has('فایل','pdf','فصل','کتابخانه','دانلود','file','chapter','library','download')) {
-      return reply(
-        'در حال حاضر فصل اول سه شاخه منتشر شده است: خیاطی، آشپزی و برنامه‌نویسی. برای هرکدام وارد بخش مربوط در صفحه شو و لینک PDF همان شاخه را انتخاب کن.',
-        'Chapter One PDFs are currently published for Sewing, Cooking, and Programming. Open the relevant branch on the website and select its PDF link.'
-      );
-    }
-    if (has('عضو','ثبت نام','ثبت‌نام','حساب','ورود','عضویت','join','sign up','membership','account','login')) {
-      if (has('چطور','چگونه','how','روش')) return reply(
-        'برای عضویت، دکمهٔ «عضویت رایگان» را در پایین صفحه یا گزینهٔ عضویت در منوی بالا انتخاب کن. سپس فرم ایجاد حساب را تکمیل کن.',
-        'Select “Free Membership” near the bottom of the page or Join in the top menu, then complete the account creation form.'
-      );
-      return t.join;
-    }
-    if (has('خرید','فروشگاه','پرداخت','قیمت','shop','buy','purchase','payment','price')) {
-      return reply(
-        'اطلاعات فایل‌های آموزشی در بخش فروشگاه قرار دارد. برای محصولات پولی، مبلغ و راهنمای کارت‌به‌کارت در پنجرهٔ خرید نمایش داده می‌شود؛ تأیید پرداخت فعلاً دستی است.',
-        'Product information is listed in the Shop. For paid products, the price and manual bank-transfer instructions appear in the purchase window; payment confirmation is currently handled manually.'
-      );
-    }
-    if (has('ربات','دستیار','هوش مصنوعی','هوشمند','ai assistant','chatbot','artificial intelligence')) {
-      return reply(
-        'NOVENTRA AI در حال حاضر نمونهٔ اولیهٔ راهنمای سایت است و هنوز به مدل هوش مصنوعی واقعی متصل نشده. می‌تواند مسیرهای مشخص سایت را معرفی کند؛ برای پاسخ‌گویی آزاد و گفت‌وگوی هوشمند، اتصال امن به سرویس AI لازم است.',
-        'NOVENTRA AI is currently an early website-guide prototype and is not connected to a real AI model yet. It can direct learners around the site; open-ended intelligent conversation requires a secure AI service connection.'
-      );
-    }
-    return reply(
-      'برای اینکه درست راهنمایی‌ات کنم، کمی بیشتر توضیح بده. می‌توانی نام دوره، موضوع درس، فایل موردنظر یا کاری را که می‌خواهی در سایت انجام بدهی بنویسی. اگر پرسشت تخصصی و خارج از راهنمای سایت باشد، صادقانه می‌گویم که هنوز پاسخ‌گوی آن نیستم.',
-      'Please add a little context so I can guide you accurately. You can mention a course, lesson topic, file, or task you want to complete on the site. If your question is outside the website guide’s scope, I’ll say so rather than guess.'
-    );
   }
   function speak(text) {
     if (!('speechSynthesis' in window)) return;
