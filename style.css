@@ -1450,3 +1450,129 @@ html { scroll-behavior:smooth; }
  .shop-art { min-height:215px; }
  .shop-item-meta { flex-direction:row; }
 }
+
+
+/* NOVENTRA 2026 — روشن، مینیمال و نقره‌ای */
+:root {
+  --white:#17191d;
+  --ink:#f6f7f8;
+  --line:rgba(105,115,126,.24);
+  --accent:#7d8792;
+  --nv-gold:#9aa3ad;
+  --nv-silver:#737e89;
+  color-scheme:light;
+}
+html,body { background:#f5f6f7; color:#202329; }
+body { background:#f5f6f7; }
+.site-header {
+  background:rgba(250,251,252,.94);
+  border-bottom:1px solid #d9dde2;
+  box-shadow:0 5px 24px rgba(25,32,40,.045);
+}
+.logo-type { color:#171a1f; }
+.logo-type small { color:#747d87; }
+.logo-symbol { color:#303740; }
+.main-nav a { color:#424a53; }
+.main-nav a:hover,.main-nav a:focus-visible { color:#111820; }
+.nav-cta { border-color:#aeb6bf; color:#20262d!important; }
+.hero {
+  color:#202329;
+  background:
+    radial-gradient(ellipse at 78% 38%,rgba(177,187,198,.20),transparent 38%),
+    linear-gradient(130deg,#fbfcfd,#eef1f4 62%,#f8f9fa);
+}
+.hero h1,.hero h2 { color:#171b20; }
+.hero h1 em { color:#697581; text-shadow:none; }
+.hero-intro { color:#555f69; }
+.eyebrow,.section-kicker { color:#737e89; }
+.eyebrow-en,.hero-proof-mark { color:#737e89; }
+.hero-proof { border-color:#d8dde2; }
+.hero-proof strong { color:#272d34; }
+.hero-proof small,.hero-bottomline { color:#747e88; }
+.btn-light {
+  color:#fff;
+  background:linear-gradient(135deg,#525d68,#252d36);
+  border:1px solid #59636e;
+  box-shadow:0 8px 22px rgba(30,38,47,.12);
+}
+.text-link { color:#3e4852; }
+.hero-visual { color:#515b66; }
+.visual-label,.couture-caption { color:#6e7882; }
+.round-stamp { color:#5b6671; border-color:#aeb6bf; }
+.worlds-section,.library-section,.shop-section,.about-section {
+  color:#242a31;
+  background:linear-gradient(180deg,#f7f8f9,#eef1f3);
+}
+.worlds-heading h2,.section-top h2,.shop-heading h2,.fashion-slider-heading h2 {
+  color:#1c2228;
+}
+.worlds-heading p,.section-description { color:#626c76; }
+.world-card {
+  border:1px solid #cbd1d7;
+  border-radius:8px;
+  box-shadow:0 12px 30px rgba(25,32,40,.07);
+}
+.world-card::after {
+  background:linear-gradient(180deg,rgba(13,18,24,.05) 0%,rgba(13,18,24,.24) 38%,rgba(13,18,24,.88) 100%);
+}
+.world-index { border-color:rgba(255,255,255,.42); }
+.worlds-signature { color:#737e89; }
+.trust-strip { background:#e8ebee; border-color:#d3d8dd; }
+.trust-strip span { color:#39424b; }
+.academy-section,.systems-section,.qna-section {
+  color:#252b32;
+  background:#f7f8f9;
+  border-color:#d8dde2;
+}
+.journey-card,.shop-item,.qna-card {
+  color:#252b32;
+  background:linear-gradient(145deg,#fff,#f0f2f4);
+  border:1px solid #d1d6dc;
+  box-shadow:0 10px 28px rgba(25,32,40,.055);
+}
+.journey-card h3,.shop-item-meta h3 { color:#222830; }
+.journey-card p,.shop-item-meta p { color:#626d77; }
+.journey-number,.journey-icon,.card-arrow { color:#65717c; }
+.featured-mark { color:#65717c; }
+.systems-copy h2,.qna-heading h2 { color:#20262d; }
+.systems-copy p,.qna-heading p { color:#626d77; }
+.method-pills li { color:#3b444d; border-color:#d2d7dc; }
+.method-pills a { color:#3b444d; }
+.library-layout,.archive-list a { color:#303841; }
+.archive-list a { border-color:#d5dae0; }
+.archive-list small,.archive-note { color:#707a84; }
+.join-section {
+  color:#242a31;
+  background:linear-gradient(115deg,#edf0f2,#fafbfc);
+  border-color:#d4d9de;
+}
+.join-section h2 { color:#20262d; }
+.join-section p { color:#5e6872; }
+.site-footer {
+  color:#dfe3e7;
+  background:#252c34;
+  border-top:1px solid #aab2bb;
+}
+.footer-brand p,.footer-column a,.footer-bottom a { color:#c2c9d0; }
+.footer-column strong { color:#f1f3f5; }
+.footer-motto { color:#c0c8d0; }
+.footer-bottom { border-color:rgba(255,255,255,.16); color:#aeb7c0; }
+.qna-form-wrap,.qna-signin-note {
+  color:#303841;
+  background:#fff;
+  border-color:#d4d9de;
+}
+.qna-form label,.qna-reply-form label { color:#3b444d; }
+.qna-form input,.qna-form select,.qna-form textarea,.qna-reply-form textarea {
+  color:#252b32;
+  background:#f7f8f9;
+  border-color:#cbd2d9;
+}
+.qna-question-text,.qna-answer p { color:#515c66; }
+.qna-answer { background:#edf0f2; border-right-color:#8c97a2; }
+.qna-answer strong { color:#3e4852; }
+.fashion-slider-section { background:#eef1f3; color:#222930; }
+.fashion-slider-heading p { color:#626d77; }
+@media(max-width:760px) {
+  .site-header { background:rgba(250,251,252,.97); }
+}
