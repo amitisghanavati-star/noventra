@@ -300,20 +300,20 @@
 </dialog>
 </main>
 
-<!-- NOVENTRA AI Guide: first public-facing guided assistant interface -->
+<!-- NOVENTRA AI: generative learning assistant -->
 <div class="noventra-ai" id="noventraAI">
   <button class="noventra-ai-launcher" id="noventraAILauncher" type="button" aria-label="Open NOVENTRA AI" aria-expanded="false" aria-controls="noventraAIPanel">
     <span class="noventra-ai-launcher-mark">N<span>✳</span></span>
     <span class="noventra-ai-launcher-label">NOVENTRA AI</span>
   </button>
-  <section class="noventra-ai-panel" id="noventraAIPanel" aria-label="NOVENTRA AI Guide" hidden>
+  <section class="noventra-ai-panel" id="noventraAIPanel" aria-label="NOVENTRA AI" hidden>
     <header class="noventra-ai-head">
-      <div class="noventra-ai-brand"><span class="noventra-ai-mini-mark">N✳</span><div><strong>NOVENTRA AI</strong><small id="noventraAIStatus">YOUR INTELLIGENT LEARNING GUIDE</small></div></div>
+      <div class="noventra-ai-brand"><span class="noventra-ai-mini-mark">N✳</span><div><strong>NOVENTRA AI</strong><small id="noventraAIStatus">GENERATIVE AI · OPENAI + GEMINI BACKUP</small></div></div>
       <button class="noventra-ai-close" id="noventraAIClose" type="button" aria-label="Close assistant">×</button>
     </header>
-    <div class="noventra-ai-welcome"><span class="noventra-ai-online"></span><span id="noventraAIWelcome">سلام! من راهنمای هوشمند نوونترا هستم. برای پیدا کردن مسیر یادگیری یا بخش موردنظرت کمکت می‌کنم.</span></div>
+    <div class="noventra-ai-welcome"><span class="noventra-ai-online"></span><span id="noventraAIWelcome">سلام! من هوش مصنوعی NOVENTRA هستم. سؤال‌هایت را بپرس؛ برای یادگیری، حل مسئله و بررسی موضوعات مختلف همراهت هستم.</span></div>
     <div class="noventra-ai-messages" id="noventraAIMessages" role="log" aria-live="polite" aria-relevant="additions">
-      <div class="noventra-ai-message assistant"><span id="noventraAIFirstMessage">از کدام بخش نوونترا می‌خواهی شروع کنی؟</span></div>
+      <div class="noventra-ai-message assistant"><span id="noventraAIFirstMessage">امروز درباره چه موضوعی می‌خواهی گفت‌وگو کنیم؟</span></div>
     </div>
     <div class="noventra-ai-quick" id="noventraAIQuick">
       <button type="button" data-ai-prompt="شاخه‌های آموزشی نوونترا را معرفی کن">شاخه‌های آموزشی</button>
@@ -325,7 +325,7 @@
       <input id="noventraAIInput" type="text" autocomplete="off" maxlength="500" placeholder="پیامت را بنویس..." aria-label="Your message">
       <button class="noventra-ai-send" type="submit" aria-label="Send message">↑</button>
     </form>
-    <div class="noventra-ai-foot" id="noventraAIFoot">راهنمای نسخهٔ آغازین · پاسخ‌گویی صوتی در مرورگرهای پشتیبانی‌شده</div>
+    <div class="noventra-ai-foot" id="noventraAIFoot">پاسخ‌گویی هوشمند با OpenAI و موتور پشتیبان Gemini</div>
   </section>
 </div>
 
@@ -341,7 +341,7 @@
   </div>
   <div class="footer-bottom"><span>© 2026 NOVENTRA. تمامی حقوق محفوظ است.</span><a href="#home">بازگشت به بالای صفحه ↑</a></div>
 </footer>
-<script src="script.js?v=20261116-gemini-diagnostics-2"></script>
+<script src="script.js?v=20261120-noventra-ai-1"></script>
 <script type="module" src="auth.js?v=20261105-firebase-2"></script>
 <script type="module" src="qna.js?v=20261105-qna-1"></script>
 </body></html>
