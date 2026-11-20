@@ -1691,3 +1691,12 @@ a:focus-visible,button:focus-visible{outline:3px solid #87939e;outline-offset:4p
  .hero-proof{grid-template-columns:1fr 1fr}
  .footer-main{grid-template-columns:1fr 1fr}
 }
+
+
+/* NOVENTRA spacing fix — avoid an oversized pause between learning sections */
+.academy-section{padding-bottom:60px}
+.systems-section{padding-top:60px}
+@media(max-width:760px){
+  .academy-section{padding-bottom:48px}
+  .systems-section{padding-top:48px}
+}
