@@ -1340,7 +1340,7 @@ html { scroll-behavior:smooth; }
 .world-sewing::before { background-image:url('https://images.unsplash.com/photo-1590736969955-71cc94901144?auto=format&fit=crop&w=1000&q=85'); }
 .world-kitchen::before { background-image:url('https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=1000&q=85'); }
 .world-programming::before { background-image:url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1000&q=85'); }
-.world-languages::before { background-image:url('https://images.unsplash.com/photo-1455390582262-044cª3d3a8?auto=format&fit=crop&w=1000&q=85'); }
+.world-languages::before { background-image:url('https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=1000&q=85'); }
 .world-index { align-self:flex-start; padding:6px 9px; color:#f0dfc0; background:rgba(5,8,13,.58); border:1px solid rgba(210,178,122,.35); }
 .world-symbol { width:46px; height:46px; margin:22px 0 12px; background:rgba(5,8,13,.45); backdrop-filter:blur(8px); }
 .world-card h3 { font-size:19px; }
