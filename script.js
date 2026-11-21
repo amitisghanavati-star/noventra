@@ -415,7 +415,7 @@ if (slider) {
     addMessage(waiting, 'assistant');
     const pendingBubble = messages.lastElementChild;
 
-    const workerUrl = 'https://noventra-gemini.artimic-ghanavati.workers.dev/';
+    const workerUrl = new URL('/api/chat', window.location.origin).toString();
     const controller = new AbortController();
     const timeoutId = window.setTimeout(() => controller.abort(), 65000);
 
