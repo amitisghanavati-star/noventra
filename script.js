@@ -411,10 +411,6 @@ if (slider) {
     if (!clean) return;
 
     addMessage(clean, 'user');
-    const answer = temporaryFAQAnswer(clean);
-    addMessage(answer, 'assistant');
-    lastReply = answer;
-    return;
     const waiting = isEnglish() ? 'Thinking…' : 'در حال نوشتن پاسخ…';
     addMessage(waiting, 'assistant');
     const pendingBubble = messages.lastElementChild;
